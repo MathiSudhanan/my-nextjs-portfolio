@@ -1,11 +1,14 @@
 import { motion } from "framer-motion";
 import React from "react";
-import Image from 'next/image'
+import Image from "next/image";
+import { Project } from "../typings";
+import { urlFor } from "../sanity";
 
-type Props = {};
+type Props = {
+  projects: Project[];
+};
 
-const Projects = (props: Props) => {
-  const projects = [1, 2, 3, 4, 5];
+const Projects = ({ projects }: Props) => {
   return (
     <motion.div
       initial={{
@@ -27,10 +30,10 @@ const Projects = (props: Props) => {
         className="relative w-full flex overflow-x-scroll overflow-y-hidden snap-x snap-mandatory z-20 
       scrollbar-thin scrollbar-track-gray-400/20 scrollbar-thumb-[#F7AB0A]/80"
       >
-        {projects.map((project, index) => {
+        {projects?.map((project, index) => {
           return (
             <div
-              key={index}
+              key={project._id}
               className="w-screen flex-shrink-0 snap-center flex flex-col space-y-5 
               items-center justify-center p-20 md:p-44 h-screen"
             >
@@ -49,23 +52,37 @@ const Projects = (props: Props) => {
                 viewport={{
                   once: true,
                 }}
-                src="/Images/me-removebg-preview.png"
-                className="bg-gray-300  w-32 h-32 rounded-full object-cover object-center  xl:w-[200px] xl:h-[200px]"
+                src={urlFor(project.image).url()}
+                // className="bg-gray-300  w-32 h-32 rounded-full object-cover object-center  xl:w-[200px] xl:h-[200px]"
+                className="bg-gray-300   object-cover object-center  xl:w-[800px] xl:h-[500px]"
               />
               <div className="space-y-10 px-0 md:px-10 max-w-6xl">
                 <h4 className="text-4xl font-semibold text-center">
                   <span className="underline decoration-[#F7AB0A] ">
                     Case Study {index + 1} of {projects.length}:
                   </span>{" "}
-                  Permission UI & API - MERN Stack
+                  {project.title}
                 </h4>
+                <div className="flex space-x-3.5 my-4 w-full">
+                  {project.technologies?.map((tech) => {
+                    return (
+                      <img
+                        key={tech._id}
+                        src={urlFor(tech.image).url()}
+                        className="h-10 w-10 rounded-full"
+                        alt=""
+                      />
+                    );
+                  })}
+                </div>
                 <p className="text-lg text-center md:text-left">
+                  {project.summary}
                   {/* Permissions contains Permissions API and Permission UI which
                   is MERN stack Application.
                  
                   Permissions API contains tech stack of Express API, Prisma
                   Client and Mongo DB. Permission UI contains tech stack of
-                  React, TypeScript, Redux Toolkit, Axios. */}
+                  React, TypeScript, Redux Toolkit, Axios. 
                   Permissions is a data entitlement project. It deals with the
                   permissions at data level. This is a sample project with few
                   complexities(fund Report date Permissions, Portfolio
@@ -73,7 +90,7 @@ const Projects = (props: Props) => {
                   removed) reduced due to time. The permissions can be applied
                   to stat level, category level, fund level, client fund level
                   along with combination of Company, User Group, User with Water
-                  flow logic.
+                  flow logic.*/}
                 </p>
               </div>
             </div>
