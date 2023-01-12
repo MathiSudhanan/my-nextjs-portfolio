@@ -54,7 +54,7 @@ const Projects = ({ projects }: Props) => {
                 }}
                 src={urlFor(project.image).url()}
                 // className="bg-gray-300  w-32 h-32 rounded-full object-cover object-center  xl:w-[200px] xl:h-[200px]"
-                className="bg-gray-300   object-cover object-center  xl:w-[800px] xl:h-[500px]"
+                className="bg-gray-300   object-cover object-center  xl:w-[700px] xl:h-[400px]"
               />
               <div className="space-y-10 px-0 md:px-10 max-w-6xl">
                 <h4 className="text-4xl font-semibold text-center">
@@ -63,14 +63,16 @@ const Projects = ({ projects }: Props) => {
                   </span>{" "}
                   {project.title}
                 </h4>
-                <div className="flex space-x-3.5 my-4 w-full">
+                <div className="flex items-center space-x-2 justify-center  ">
                   {project.technologies?.map((tech) => {
                     return (
                       <img
                         key={tech._id}
                         src={urlFor(tech.image).url()}
-                        className="h-10 w-10 rounded-full"
+                        className="rounded-full h-10 w-10"
                         alt=""
+                        // width={10}
+                        // height={10}
                       />
                     );
                   })}
