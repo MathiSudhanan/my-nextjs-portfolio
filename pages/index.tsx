@@ -15,7 +15,7 @@ import { Experience, PageInfo, Project, Skill, Social } from "../typings";
 import { fetchPageInfo } from "../Utils/fetchPageInfo";
 import { fetchExperiences } from "../Utils/fetchExperiences";
 import { fetchProjects } from "../Utils/fetchProjects";
-import { fetchSkills } from "../Utils/FetchSkills";
+import { fetchSkills } from "../Utils/fetchSkills";
 import { fetchSocials } from "../Utils/fetchSocials";
 
 type Props = {
@@ -45,31 +45,31 @@ export default function Home({
       <Header socials={socials} />
 
       {/*Hero*/}
-      <section id="hero" className="snap-start">
+      <section id="hero" className="md:snap-start">
         <Hero pageInfo={pageInfo} />
       </section>
 
       {/*About*/}
-      <section id="about" className="snap-center">
+      <section id="about" className="md:snap-center">
         <About pageInfo={pageInfo} />
       </section>
 
       {/*Experience*/}
-      <section id="experience" className="snap-center">
+      <section id="experience" className="md:snap-center">
         <WorkExperience experiences={experiences} />
       </section>
 
       {/*Skills*/}
-      <section id="skills" className="snap-start">
+      <section id="skills" className="md:snap-start">
         <Skills skills={skills} />
       </section>
       {/*Projects*/}
-      <section id="projects" className="snap-start">
+      <section id="projects" className="md:snap-start">
         <Projects projects={projects} />
       </section>
 
       {/*Contact Me*/}
-      <section id="contact" className="snap-start">
+      <section id="contact" className="md:snap-start">
         <ContactMe />
       </section>
 

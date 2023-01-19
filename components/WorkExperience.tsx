@@ -10,22 +10,24 @@ type Props = {
 const WorkExperience = ({ experiences }: Props) => {
   return (
     <motion.div
-      initial={{
-        opacity: 0,
-      }}
-      transition={{
-        duration: 1.5,
-      }}
-      whileInView={{
-        opacity: 1,
-      }}
-      className="h-screen flex relative overflow-hidden flex-col text-left
-        md:flex-row max-w-full justify-evenly mx-auto items-center"
+      // initial={{
+      //   opacity: 0,
+      // }}
+      // transition={{
+      //   duration: 1.5,
+      // }}
+      // whileInView={{
+      //   opacity: 1,
+      // }}
+      className="md:pt-0 md:h-screen relative md:overflow-hidden text-left
+        max-w-full md:justify-evenly md:mx-auto md:items-center"
     >
-      <h3 className="absolute top-24 tracking-[20px] uppercase text-gray-500 text-2xl">
-        Experience
-      </h3>
-      <div className="w-full flex space-x-5 overflow-x-scroll p-10 snap-x snap-mandatory mt-40 scrollbar scrollbar-track-gray-400/20 scrollbar-thumb-[#F7AB0A]/80">
+      <div className=" pt-20 flex  items-center justify-center">
+        <h3 className="top-24 tracking-[20px] uppercase text-gray-500 text-2xl">
+          Experience
+        </h3>
+      </div>
+      <div className="w-full flex flex-col md:flex-row space-y-5 md:space-y-0 md:space-x-5 overflow-x-scroll p-10 md:snap-x md:snap-mandatory md:mt-40 scrollbar scrollbar-track-gray-400/20 scrollbar-thumb-[#F7AB0A]/80">
         {experiences?.map((experience) => {
           return (
             <ExperienceCard key={experience._id} experience={experience} />

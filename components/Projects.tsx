@@ -20,10 +20,10 @@ const Projects = ({ projects }: Props) => {
       whileInView={{
         opacity: 1,
       }}
-      className="h-screen relative flex overflow-hidden flex-col text-left 
+      className="md:h-screen relative flex md:overflow-hidden flex-col text-left 
       md:flex-row max-w-full justify-evenly mx-auto items-center z-0"
     >
-      <h3 className="absolute top-24 uppercase tracking-[20px] text-gray-500 text-2xl">
+      <h3 className="md:absolute top-24 uppercase tracking-[20px] text-gray-500 text-2xl">
         Projects
       </h3>
       <div
@@ -35,7 +35,7 @@ const Projects = ({ projects }: Props) => {
             <div
               key={project._id}
               className="w-screen flex-shrink-0 snap-center flex flex-col space-y-5 
-              items-center justify-center p-20 md:p-44 h-screen"
+              items-center justify-center p-20 md:p-44 md:h-screen"
             >
               <motion.img
                 initial={{
@@ -54,10 +54,10 @@ const Projects = ({ projects }: Props) => {
                 }}
                 src={urlFor(project.image).url()}
                 // className="bg-gray-300  w-32 h-32 rounded-full object-cover object-center  xl:w-[200px] xl:h-[200px]"
-                className="bg-gray-300   object-cover object-center  xl:w-[700px] xl:h-[400px]"
+                className="bg-gray-300 w-32 h-32  object-cover object-center  xl:w-[700px] xl:h-[400px]"
               />
               <div className="space-y-10 px-0 md:px-10 max-w-6xl">
-                <h4 className="text-4xl font-semibold text-center">
+                <h4 className="text-2xl  md:text-4xl font-semibold text-center">
                   <span className="underline decoration-[#F7AB0A] ">
                     Case Study {index + 1} of {projects.length}:
                   </span>{" "}
@@ -77,7 +77,7 @@ const Projects = ({ projects }: Props) => {
                     );
                   })}
                 </div>
-                <p className="text-lg text-center md:text-left">
+                <p className="text-lg md:text-center text-left">
                   {project.summary}
                   {/* Permissions contains Permissions API and Permission UI which
                   is MERN stack Application.

@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useMediaQuery } from "../hooks/MediaQuery";
 import { urlFor } from "../sanity";
 import { Experience } from "../typings";
 
@@ -8,16 +9,26 @@ type Props = {
 };
 
 const ExperienceCard = ({ experience }: Props) => {
+  
+
+  const isSmall = useMediaQuery("(min-width: 480px)");
+  // const useIsMedium = () => useMediaQuery("(min-width: 768px)");
+  
   return (
     <article
-      className="flex flex-col rounded-lg items-center space-y-7 flex-shrink-0 w-[700px] 
-    md:w-[600px] xl:w-[900xl] snap-center bg-[#292929] p-10 hover:opacity-100 opacity-40 cursor-pointer transition-opacity duration-200 overflow-hidden"
+      className="relative flex flex-col ml-0 rounded-lg items-center md:space-y-7 flex-shrink-0 w-[98%]
+    md:w-[600px] xl:w-[900xl] snap-center bg-[#292929] p-2 md:p-10 md:hover:opacity-100 md:opacity-40 cursor-pointer 
+    md:transition-opacity md:duration-200 md:overflow-hidden"
     >
       <motion.img
-        initial={{
-          y: -100,
-          opacity: 0,
-        }}
+        initial={
+          isSmall
+            ? { opacity: 1 }
+            : {
+                y: -100,
+                opacity: 0,
+              }
+        }
         transition={{
           duration: 1.2,
         }}
