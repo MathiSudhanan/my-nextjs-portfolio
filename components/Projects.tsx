@@ -54,7 +54,7 @@ const Projects = ({ projects }: Props) => {
                 }}
                 src={urlFor(project.image).url()}
                 // className="bg-gray-300  w-32 h-32 rounded-full object-cover object-center  xl:w-[200px] xl:h-[200px]"
-                className="bg-gray-300 w-32 h-32  object-cover object-center  xl:w-[700px] xl:h-[400px]"
+                className="bg-gray-300 w-50 h-50 mt-30 object-cover object-center  xl:w-[700px] xl:h-[400px]"
               />
               <div className="space-y-10 px-0 md:px-10 max-w-6xl">
                 <h4 className="text-2xl  md:text-4xl font-semibold text-center">
