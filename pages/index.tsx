@@ -45,36 +45,36 @@ export default function Home({
       <Header socials={socials} />
 
       {/*Hero*/}
-      <section id="hero" className="md:snap-start">
+      <section id="hero" className="snap-start">
         <Hero pageInfo={pageInfo} />
       </section>
 
       {/*About*/}
-      <section id="about" className="md:snap-center">
+      <section id="about" className="snap-center">
         <About pageInfo={pageInfo} />
       </section>
 
       {/*Experience*/}
-      <section id="experience" className="md:snap-center">
+      <section id="experience" className="snap-start">
         <WorkExperience experiences={experiences} />
       </section>
 
       {/*Skills*/}
-      <section id="skills" className="md:snap-start">
+      <section id="skills" className="snap-start">
         <Skills skills={skills} />
       </section>
       {/*Projects*/}
-      <section id="projects" className="md:snap-start">
+      <section id="projects" className="snap-start">
         <Projects projects={projects} />
       </section>
 
       {/*Contact Me*/}
-      <section id="contact" className="md:snap-start">
+      <section id="contact" className="snap-end">
         <ContactMe />
       </section>
 
       <Link href="#hero" legacyBehavior>
-        <footer className="sticky bottom-5 w-full cursor-pointer">
+        <footer className="sticky bottom-14 xl:bottom-5 w-full cursor-pointer">
           <div className="flex items-center justify-center">
             <img
               className="h-10 w-10 rounded-full bg-gray-500 filter grayscale hover:grayscale-0 cursor-pointer"

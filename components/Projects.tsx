@@ -3,12 +3,24 @@ import React from "react";
 import Image from "next/image";
 import { Project } from "../typings";
 import { urlFor } from "../sanity";
+import { useMediaQuery } from "../hooks/MediaQuery";
 
 type Props = {
   projects: Project[];
 };
 
 const Projects = ({ projects }: Props) => {
+  const isSmall = useMediaQuery("(max-height: 500px)");
+
+  const isLandscape = useMediaQuery("(orientation: landscape)");
+  let sectionClass =
+    "md:h-fit xl:h-screen relative flex xl:overflow-hidden flex-col text-left md:flex-row max-w-full justify-evenly mx-auto items-center z-0";
+  if (isSmall) {
+    sectionClass += " h-fit";
+  } else {
+    sectionClass += " h-screen";
+  }
+
   return (
     <motion.div
       initial={{
@@ -20,14 +32,13 @@ const Projects = ({ projects }: Props) => {
       whileInView={{
         opacity: 1,
       }}
-      className="md:h-screen relative flex md:overflow-hidden flex-col text-left 
-      md:flex-row max-w-full justify-evenly mx-auto items-center z-0"
+      className={sectionClass}
     >
-      <h3 className="md:absolute top-24 uppercase tracking-[20px] text-gray-500 text-2xl">
+      <h3 className="relative md:absolute top-36 md:top-24 uppercase tracking-[20px] text-gray-500 text-2xl">
         Projects
       </h3>
       <div
-        className="relative w-full flex overflow-x-scroll overflow-y-hidden snap-x snap-mandatory z-20 
+        className="w-full flex overflow-x-scroll overflow-y-hidden snap-x snap-mandatory z-20 
       scrollbar-thin scrollbar-track-gray-400/20 scrollbar-thumb-[#F7AB0A]/80"
       >
         {projects?.map((project, index) => {
@@ -35,12 +46,13 @@ const Projects = ({ projects }: Props) => {
             <div
               key={project._id}
               className="w-screen flex-shrink-0 snap-center flex flex-col space-y-5 
-              items-center justify-center p-20 md:p-44 md:h-screen"
+              items-center justify-center p-20 xl:p-44 xl:h-screen h-fit"
             >
               <motion.img
                 initial={{
                   y: -300,
-                  opacity: 0,
+
+                  opacity: isSmall ? 1 : 0,
                 }}
                 transition={{
                   duration: 1.2,
@@ -54,10 +66,10 @@ const Projects = ({ projects }: Props) => {
                 }}
                 src={urlFor(project.image).url()}
                 // className="bg-gray-300  w-32 h-32 rounded-full object-cover object-center  xl:w-[200px] xl:h-[200px]"
-                className="bg-gray-300 w-50 h-50 mt-30 object-cover object-center  xl:w-[700px] xl:h-[400px]"
+                className="bg-gray-300 w-50 h-50 mt-20 relative md:mt-36 object-cover object-center  xl:w-[640px] xl:h-[360px] z-0"
               />
               <div className="space-y-10 px-0 md:px-10 max-w-6xl">
-                <h4 className="text-2xl  md:text-4xl font-semibold text-center">
+                <h4 className="text-2xl  md:text-3xl font-semibold text-center">
                   <span className="underline decoration-[#F7AB0A] ">
                     Case Study {index + 1} of {projects.length}:
                   </span>{" "}
@@ -79,20 +91,6 @@ const Projects = ({ projects }: Props) => {
                 </div>
                 <p className="text-lg md:text-center text-left">
                   {project.summary}
-                  {/* Permissions contains Permissions API and Permission UI which
-                  is MERN stack Application.
-                 
-                  Permissions API contains tech stack of Express API, Prisma
-                  Client and Mongo DB. Permission UI contains tech stack of
-                  React, TypeScript, Redux Toolkit, Axios. 
-                  Permissions is a data entitlement project. It deals with the
-                  permissions at data level. This is a sample project with few
-                  complexities(fund Report date Permissions, Portfolio
-                  permissions and Portfolio Report Date Permissions has been
-                  removed) reduced due to time. The permissions can be applied
-                  to stat level, category level, fund level, client fund level
-                  along with combination of Company, User Group, User with Water
-                  flow logic.*/}
                 </p>
               </div>
             </div>

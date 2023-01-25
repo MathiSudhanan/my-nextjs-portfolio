@@ -4,12 +4,26 @@ import { type } from "os";
 import { PageInfo } from "../typings";
 import { urlFor } from "../sanity";
 import { profile } from "console";
+import { useMediaQuery } from "../hooks/MediaQuery";
 
 type Props = {
   pageInfo: PageInfo;
 };
 
 const About = ({ pageInfo }: Props) => {
+  const isSmall = useMediaQuery("(max-height: 500px)");
+  const isMed = useMediaQuery("(min-width: 768px)");
+
+  const isLandscape = useMediaQuery("(orientation: landscape)");
+  let sectionClass =
+    "pt-20 relative xl:h-screen  text-center md:text-left md:flex-row max-w-7xl px-10  mx-auto items-center";
+  if (isSmall) {
+    sectionClass += " h-fit";
+  } else {
+    sectionClass += " h-screen";
+  }
+  console.log(sectionClass);
+
   return (
     <motion.div
       initial={{
@@ -21,14 +35,14 @@ const About = ({ pageInfo }: Props) => {
       whileInView={{
         opacity: 1,
       }}
-      className="pt-20 relative md:h-screen text-center md:text-left md:flex-row max-w-7xl px-10 justify-evenly mx-auto items-center"
+      className={sectionClass}
     >
       <div className=" flex flex-row items-center justify-center">
         <h3 className=" top-24 uppercase tracking-[20px] text-gray-500 text-2xl">
           About
         </h3>
       </div>
-      <div className="pt-5 space-y-4 flex flex-col md:flex-row items-center justify-center">
+      <div className="relative  xl:mt-32 pt-5 space-y-4 flex flex-col md:flex-row items-center justify-center">
         <motion.img
           initial={{
             x: -200,
@@ -42,9 +56,9 @@ const About = ({ pageInfo }: Props) => {
             x: 0,
           }}
           src={urlFor(pageInfo.profilePic).url()}
-          className=" bg-gray-300 -mb-20 md:mb-0 flex-shrink-0 w-28 h-28 md:w-56 md:h-56 rounded-full object-cover md:rounded-lg  md:h-95 xl:w-[500px] xl:h-[600px]"
+          className=" bg-gray-300 -mb-20 md:mb-0 flex-shrink-0 w-28 h-28 md:w-56 md:h-56 rounded-full object-cover md:rounded-lg  md:h-95 xl:w-[300px] xl:h-[400px]"
         />
-        <div className="pt-20 md:pt-0 space-y-10 px-0 md:px-10">
+        <div className="relative pt-20 md:pt-0 space-y-10 px-0 md:px-10">
           <h4 className="text-2xl md:text-4xl font-semibold">
             Here is a{" "}
             <span className="underline decoration-[#FBAB07]/50">little</span>{" "}
