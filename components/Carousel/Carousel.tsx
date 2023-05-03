@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Image } from "../../typings";
 import { urlFor } from "../../sanity";
-import project from "../../sanity-project/schemas/project";
+
 import LeftArrow from "./icons/LeftArrow";
 import RightArrow from "./icons/RightArrow";
 import { motion } from "framer-motion";
