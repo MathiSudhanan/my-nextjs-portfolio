@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import React from "react";
 import { useMediaQuery } from "../hooks/MediaQuery";
-import skill from "../sanity-project/schemas/skill";
+
 import { Skill as WorkSkill } from "../typings";
 import Skill from "./Skill";
 
