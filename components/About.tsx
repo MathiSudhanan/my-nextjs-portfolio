@@ -1,9 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { type } from "os";
 import { PageInfo } from "../typings";
 import { urlFor } from "../sanity";
-import { profile } from "console";
 import { useMediaQuery } from "../hooks/MediaQuery";
 
 type Props = {

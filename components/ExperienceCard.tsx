@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useMediaQuery } from "../hooks/MediaQuery";
 import { urlFor } from "../sanity";
 import { Experience } from "../typings";

@@ -1,8 +1,6 @@
 import { GetStaticProps } from "next";
 import Head from "next/head";
-import Image from "next/image";
 import Link from "next/link";
-import { type } from "os";
 import About from "../components/About";
 import ContactMe from "../components/ContactMe";
 import WorkExperience from "../components/WorkExperience";
@@ -10,15 +8,12 @@ import Header from "../components/Header";
 import Hero from "../components/Hero";
 import Projects from "../components/Projects";
 import Skills from "../components/Skills";
-import styles from "../styles/Home.module.css";
 import { Experience, PageInfo, Project, Skill, Social } from "../typings";
 import { fetchPageInfo } from "../Utils/fetchPageInfo";
 import { fetchExperiences } from "../Utils/fetchExperiences";
 import { fetchProjects } from "../Utils/fetchProjects";
 import { fetchSkills } from "../Utils/fetchSkills";
 import { fetchSocials } from "../Utils/fetchSocials";
-import ProjectCard from "../components/ProjectCard/ProjectCard";
-import project from "../sanity-project/schemas/project";
 
 type Props = {
   pageInfo: PageInfo;
