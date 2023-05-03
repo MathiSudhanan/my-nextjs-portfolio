@@ -14,10 +14,10 @@ const WorkExperience = ({ experiences }: Props) => {
 
   const isLandscape = useMediaQuery("(orientation: landscape)");
   let sectionClass =
-    "pt-20 relative h-fit xl:h-screen  text-center md:text-left md:flex-row max-w-7xl px-10  mx-auto items-center";
+    "pt-20 md:pt-20 relative h-fit  text-center md:text-left md:flex-row  px-10 xl:px-10 items-center";
 
   // "md:mt-24 pt-20  h-screen xl:h-screen flex flex-col relative md:overflow-hidden text-left max-w-full md:justify-evenly md:mx-auto md:items-center";
-  // if (isSmall || (!isMed && !isLandscape)) {
+  // if (isSmall) {
   //   sectionClass += " h-fit";
   // } else {
   //   sectionClass += " h-screen";
@@ -41,7 +41,7 @@ const WorkExperience = ({ experiences }: Props) => {
             Experience
           </h3>
         </div>
-        <div className="mt-5 w-full flex flex-col md:flex-row space-y-5 md:space-y-0 md:space-x-5 overflow-x-scroll xl:p-10 md:snap-x md:snap-mandatory md:mt-20 xl:mt-40 scrollbar scrollbar-track-gray-400/20 scrollbar-thumb-[#F7AB0A]/80">
+        <div className="mt-5 w-full flex flex-col md:flex-row space-y-5 md:space-y-0 md:space-x-5 overflow-x-scroll xl:p-10 md:snap-x md:snap-mandatory md:mt-10  scrollbar scrollbar-track-gray-400/20 scrollbar-thumb-[#F7AB0A]/80">
           {experiences?.map((experience) => {
             return (
               <ExperienceCard key={experience._id} experience={experience} />

@@ -54,7 +54,7 @@ export interface Experience extends SanityBody {
 export interface Project extends SanityBody {
   _type: "project";
   title: string;
-  image: Image;
+  images: Image[];
   linkToBuild: string;
   summary: string;
   technologies: Technology[];

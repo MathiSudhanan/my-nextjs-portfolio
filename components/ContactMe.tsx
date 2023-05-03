@@ -108,4 +108,4 @@ const ContactMe = ({}: Props) => {
   );
 };
 
-export default ContactMe;
+export default React.memo(ContactMe);

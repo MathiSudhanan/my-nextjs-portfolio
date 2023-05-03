@@ -8,13 +8,22 @@ export default {
       title: 'Title',
       type: 'string',
     },
+    // {
+    //   name: 'image',
+    //   title: 'Image',
+    //   type: 'image',
+    //   options: {
+    //     hotspot: true,
+    //   },
+    // },
     {
-      name: 'image',
-      title: 'Image',
-      type: 'image',
-      options: {
-        hotspot: true,
-      },
+      name: 'images',
+      title: 'Images',
+      type: 'array',
+      of: [{type: 'image'}],
+      // options: {
+      //   hotspot: true,
+      // },
     },
     {
       name: 'summary',

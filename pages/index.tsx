@@ -17,6 +17,8 @@ import { fetchExperiences } from "../Utils/fetchExperiences";
 import { fetchProjects } from "../Utils/fetchProjects";
 import { fetchSkills } from "../Utils/fetchSkills";
 import { fetchSocials } from "../Utils/fetchSocials";
+import ProjectCard from "../components/ProjectCard/ProjectCard";
+import project from "../sanity-project/schemas/project";
 
 type Props = {
   pageInfo: PageInfo;
@@ -66,6 +68,7 @@ export default function Home({
       {/*Projects*/}
       <section id="projects" className="snap-start">
         <Projects projects={projects} />
+        {/* <ProjectCard project={projects[0]}/> */}
       </section>
 
       {/*Contact Me*/}
