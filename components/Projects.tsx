@@ -15,7 +15,7 @@ const Projects = ({ projects }: Props) => {
 
     const isLandscape = useMediaQuery("(orientation: landscape)");
     
-    let sectionClass = 'relative top-24 mx-auto flex flex-col items-center mx-auto';
+    let sectionClass = "pt-20 md:pt-20 relative h-fit  text-center md:text-left md:flex-row  px-10 xl:px-10 items-center";
     sectionClass += isLandscape ? ' h-fit' : ' h-screen';
     return (
         <motion.div

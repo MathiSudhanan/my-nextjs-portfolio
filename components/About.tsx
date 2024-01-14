@@ -14,7 +14,7 @@ const About = ({ pageInfo }: Props) => {
 
   const isLandscape = useMediaQuery("(orientation: landscape)");
   let sectionClass =
-    "pt-20 relative xl:h-screen  text-center md:text-left md:flex-row max-w-7xl px-10  mx-auto items-center";
+    "pt-20 md:pt-20 relative h-fit  text-center md:text-left md:flex-row  px-10 xl:px-10 items-center";
   if (isSmall) {
     sectionClass += " h-fit";
   } else {

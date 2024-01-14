@@ -15,10 +15,7 @@ const Skills = ({ skills }: Props) => {
   const isSmall = useMediaQuery("(max-height: 500px)");
 
   const isLandscape = useMediaQuery("(orientation: landscape)");
-  let sectionClass =
-    // "md:mt-24 pt-20 h-screen flex flex-col relative md:overflow-hidden text-left max-w-full md:justify-evenly md:mx-auto md:items-center";
-
-    "pt-20 flex relative flex-col text-center md:text-left xl:flex-col max-w-[2000px] xl:px-10 xl:h-screen xl:space-y-0 mx-auto  items-center";
+  let sectionClass = "pt-20 md:pt-20 relative h-fit  text-center md:text-left md:flex-row  px-10 xl:px-10 items-center";
   if (isSmall) {
     sectionClass += " h-fit md:pt-0";
   } else {
