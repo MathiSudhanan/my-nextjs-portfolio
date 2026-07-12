@@ -29,8 +29,9 @@
     "typescript": "^6.0.3"
   },
   "engines": {
-    "node": ">=24.2.0"
-  },
+  "node": ">=20.9.0",
+  "npm": ">=9"  
+},
   "prettier": {
     "semi": false,
     "printWidth": 100,
