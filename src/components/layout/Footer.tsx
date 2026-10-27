@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Container } from "@/components/ui/Layout";
 import { Icon } from "@/components/ui/Icon";
 import { Eyebrow } from "@/components/ui/Typography";
-import { contactLink, cvLink, primaryNav } from "@/lib/navigation";
+import { contactLink, cvRoute, primaryNav } from "@/lib/navigation";
 import { site } from "@/lib/site";
 import { Brand } from "./Brand";
 
@@ -11,7 +11,14 @@ export type FooterLink = { id: string; label: string; href: string };
 const linkClass =
   "inline-flex min-h-11 items-center text-fg no-underline transition-colors duration-(--duration-fast) ease-settle hover:text-accent";
 
-export function Footer({ socials }: { socials: readonly FooterLink[] }) {
+type Props = {
+  email: string | null;
+  socials: readonly FooterLink[];
+};
+
+export function Footer({ email, socials }: Props) {
+  const explore = cvRoute ? [...primaryNav, cvRoute] : primaryNav;
+
   return (
     <footer className="mt-section border-t border-line">
       <Container className="grid gap-12 py-14 md:grid-cols-[1.4fr_1fr_1fr] md:gap-8">
@@ -22,27 +29,33 @@ export function Footer({ socials }: { socials: readonly FooterLink[] }) {
           </p>
         </div>
 
-        <nav aria-label="Footer" className="flex flex-col gap-2">
-          <Eyebrow tone="muted">Explore</Eyebrow>
-          <ul className="flex flex-col">
-            {[...primaryNav, cvLink].map((item) => (
-              <li key={item.href}>
-                <Link href={item.href} className={linkClass}>
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        {explore.length > 0 ? (
+          <nav aria-label="Footer" className="flex flex-col gap-2">
+            <Eyebrow tone="muted">Explore</Eyebrow>
+            <ul className="flex flex-col">
+              {explore.map((item) => (
+                <li key={item.href}>
+                  <Link href={item.href} className={linkClass}>
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ) : (
+          <div />
+        )}
 
         <div className="flex flex-col gap-2">
           <Eyebrow tone="muted">Connect</Eyebrow>
           <ul className="flex flex-col">
-            <li>
-              <a href={`mailto:${site.email}`} className={linkClass}>
-                {site.email}
-              </a>
-            </li>
+            {email ? (
+              <li>
+                <a href={`mailto:${email}`} className={linkClass}>
+                  {email}
+                </a>
+              </li>
+            ) : null}
             <li>
               <Link href={contactLink.href} className={linkClass}>
                 Send a message

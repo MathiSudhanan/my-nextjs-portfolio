@@ -749,74 +749,52 @@ export type AllSanitySchemaTypes =
   | SanityImageAsset
   | Geopoint;
 
-// Source: ../src/lib/sanity/queries.ts
-// Variable: pageInfoQuery
-// Query: *[_type == "pageInfo"][0]{  _id,  name,  role,  email,  backgroundInformation,  heroImage,  profilePic}
-export type PageInfoQueryResult = {
-  _id: string;
-  name: string | null;
-  role: string | null;
-  email: string | null;
-  backgroundInformation: string | null;
+// Source: ../src/features/home/queries.ts
+// Variable: homeProfileQuery
+// Query: *[_type == "profile"][0]{  headline,  subheadline,  positioning,  startYear,  heroImage{ asset, hotspot, alt, decorative, "lqip": asset->metadata.lqip },  "featured": featuredCaseStudies[]->{    _id,    title,    "slug": slug.current,    outcome,    summary,    domain,    role,    period,    teamSize,    heroImage{ asset, hotspot, alt, decorative, "lqip": asset->metadata.lqip },    "techStack": techStack[]->name  }}
+export type HomeProfileQueryResult = {
+  headline: string;
+  subheadline: string | null;
+  positioning: string | null;
+  startYear: number;
   heroImage: {
-    asset?: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
+    asset: SanityImageAssetReference | null;
+    hotspot: SanityImageHotspot | null;
+    alt: string | null;
+    decorative: boolean | null;
+    lqip: string | null;
   } | null;
-  profilePic: {
-    asset?: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  } | null;
+  featured: Array<{
+    _id: string;
+    title: string;
+    slug: string;
+    outcome: string;
+    summary: string;
+    domain: string | null;
+    role: string;
+    period: string | null;
+    teamSize: number | null;
+    heroImage: {
+      asset: SanityImageAssetReference | null;
+      hotspot: SanityImageHotspot | null;
+      alt: string | null;
+      decorative: boolean | null;
+      lqip: string | null;
+    };
+    techStack: Array<string> | null;
+  }> | null;
 } | null;
 
-// Source: ../src/lib/sanity/queries.ts
-// Variable: experiencesQuery
-// Query: *[_type == "experience"] | order(dateStarted desc){  _id,  jobTitle,  company,  companyImage,  dateStarted,  dateEnded,  isCurrentlyWorkingHere,  points,  "technologies": technologies[]->{ _id, name, image }}
-export type ExperiencesQueryResult = Array<{
-  _id: string;
-  jobTitle: string;
-  company: string;
-  companyImage: {
-    asset?: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  } | null;
-  dateStarted: string;
-  dateEnded: string | null;
-  isCurrentlyWorkingHere: boolean | null;
-  points: Array<string> | null;
-  technologies: Array<{
-    _id: string;
-    name: string | null;
-    image: {
-      asset?: SanityImageAssetReference;
-      media?: unknown;
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      _type: "image";
-    } | null;
-  }> | null;
-}>;
-
-// Source: ../src/lib/sanity/queries.ts
-// Variable: socialsQuery
-// Query: *[_type == "social"] | order(title asc){  _id,  title,  url}
-export type SocialsQueryResult = Array<{
-  _id: string;
-  title: string | null;
-  url: string | null;
-}>;
+// Source: ../src/features/home/queries.ts
+// Variable: homeFactsQuery
+// Query: {  "organisations": count(array::unique(*[_type == "experience" && defined(company)].company))}
+export type HomeFactsQueryResult = {
+  organisations: number;
+};
 
 // Source: ../src/lib/sanity/queries.ts
 // Variable: siteSettingsQuery
-// Query: *[_type == "siteSettings"][0]{  name,  email,  location,  availability,  socials[]{ _key, platform, title, url }}
+// Query: *[_type == "siteSettings"][0]{  name,  email,  location,  availability,  socials[]{ _key, platform, title, url },  "cvUrl": cvFile.asset->url}
 export type SiteSettingsQueryResult = {
   name: string;
   email: string;
@@ -837,56 +815,15 @@ export type SiteSettingsQueryResult = {
     title: string;
     url: string;
   }> | null;
-} | null;
-
-// Source: ../src/lib/sanity/queries.ts
-// Variable: profileQuery
-// Query: *[_type == "profile"][0]{  headline,  subheadline,  positioning,  startYear,  aboutStory,  leadership,  martialArtsIntro,  portrait,  heroImage}
-export type ProfileQueryResult = {
-  headline: string;
-  subheadline: string | null;
-  positioning: string | null;
-  startYear: number;
-  aboutStory: RichText | null;
-  leadership: Array<{
-    title: string;
-    story?: string;
-    _type: "leadershipStatement";
-    _key: string;
-  }> | null;
-  martialArtsIntro: string | null;
-  portrait: {
-    asset?: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    decorative?: boolean;
-    caption?: string;
-    credit?: string;
-    _type: "image";
-  };
-  heroImage: {
-    asset?: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    decorative?: boolean;
-    caption?: string;
-    credit?: string;
-    _type: "image";
-  } | null;
+  cvUrl: string | null;
 } | null;
 
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '*[_type == "pageInfo"][0]{\n  _id,\n  name,\n  role,\n  email,\n  backgroundInformation,\n  heroImage,\n  profilePic\n}': PageInfoQueryResult;
-    '*[_type == "experience"] | order(dateStarted desc){\n  _id,\n  jobTitle,\n  company,\n  companyImage,\n  dateStarted,\n  dateEnded,\n  isCurrentlyWorkingHere,\n  points,\n  "technologies": technologies[]->{ _id, name, image }\n}': ExperiencesQueryResult;
-    '*[_type == "social"] | order(title asc){\n  _id,\n  title,\n  url\n}': SocialsQueryResult;
-    '*[_type == "siteSettings"][0]{\n  name,\n  email,\n  location,\n  availability,\n  socials[]{ _key, platform, title, url }\n}': SiteSettingsQueryResult;
-    '*[_type == "profile"][0]{\n  headline,\n  subheadline,\n  positioning,\n  startYear,\n  aboutStory,\n  leadership,\n  martialArtsIntro,\n  portrait,\n  heroImage\n}': ProfileQueryResult;
+    '*[_type == "profile"][0]{\n  headline,\n  subheadline,\n  positioning,\n  startYear,\n  heroImage{ asset, hotspot, alt, decorative, "lqip": asset->metadata.lqip },\n  "featured": featuredCaseStudies[]->{\n    _id,\n    title,\n    "slug": slug.current,\n    outcome,\n    summary,\n    domain,\n    role,\n    period,\n    teamSize,\n    heroImage{ asset, hotspot, alt, decorative, "lqip": asset->metadata.lqip },\n    "techStack": techStack[]->name\n  }\n}': HomeProfileQueryResult;
+    '{\n  "organisations": count(array::unique(*[_type == "experience" && defined(company)].company))\n}': HomeFactsQueryResult;
+    '*[_type == "siteSettings"][0]{\n  name,\n  email,\n  location,\n  availability,\n  socials[]{ _key, platform, title, url },\n  "cvUrl": cvFile.asset->url\n}': SiteSettingsQueryResult;
   }
 }

@@ -18,26 +18,25 @@ Production: https://www.mathisudhanan.com
 
 ```
 src/
-  app/                 App Router: layout, fonts, globals.css, routes, /api/revalidate
+  app/                 App Router: layout, fonts, globals.css, pages, /api/revalidate
+    page.tsx           home
+    contact/           contact (email, copy button, social links)
     design-system/     living style guide (dev and Vercel previews only, noindex)
+  features/
+    home/              Hero, HeroDiagram, ProofStrip, SelectedWork, CtaBand, queries, data
   components/
-    ui/                Button, Typography, Layout (Container, Section), Badges, Icon
+    ui/                Button, Typography, Layout, Badges, Icon, CaseCard, CopyField
     layout/            Header, MobileMenu, NavLinks, Footer, SkipLink, Brand
     patterns/          Mandala (decorative circular geometry)
   lib/
     env.ts             validated environment variables
-    site.ts            site name, description, canonical URL
-    navigation.ts      primary navigation, CV and contact links
+    site.ts            site name, role, description, canonical URL
+    navigation.ts      routes with a `live` flag; nav and cards link only to live routes
+    availability.ts    availability wording from the CMS
     cn.ts              class-name joiner
-    sanity/            server-only client, tagged fetch, queries, image builder
-  styles/
-    theme.css          design tokens (@theme): colour, type scale, spacing, motion
-    base.css           base layer: focus ring, selection, reduced motion
-    utilities.css      type roles, page gutter, grid pattern, header hairline
-    legacy.css         Pages Router styles, removed with src/pages in Phase 4
+    sanity/            server-only client, tagged fetch, queries, image helper and loader
+  styles/              theme.css (tokens), base.css, utilities.css (type roles, motion)
   sanity.types.ts      generated, do not edit
-  pages/ components/*.tsx hooks/ Utils/ sanity.ts typings.d.ts
-                       legacy Pages Router code, removed as each page moves to app/
 sanity-project/        Sanity Studio (own package.json), deployed separately
 ```
 
@@ -49,8 +48,9 @@ fails contrast on light backgrounds. Colours are semantic (`bg-bg`, `bg-surface`
 utilities `type-display`, `type-h1`, `type-h2`, `type-h3`, `type-lead`, `type-label`
 and `type-data`. Run the app and open `/design-system` for every token and component.
 
-The App Router and legacy Pages Router stylesheets are built separately from scoped
-sources, so legacy classes never reach new pages and the reverse.
+Tailwind's default palette is removed, so only the semantic tokens exist. Motion is CSS
+only (`animate-rise`, `animate-draw`, `reveal`) and never changes opacity on scroll, so text
+keeps its contrast at every moment; everything is disabled under `prefers-reduced-motion`.
 
 ## Data and caching
 
@@ -88,7 +88,8 @@ number or address.
 cd sanity-project
 npm run migrate:content                      # dry run against the live dataset: prints the plan
 npm run migrate:content -- --file backup.json    # dry run against a backup file
-SANITY_AUTH_TOKEN=... npm run migrate:content -- --apply      # writes, as one transaction
+npm run migrate:content:apply                # writes, as one transaction, using your `sanity login` session
+SANITY_AUTH_TOKEN=... npm run migrate:content -- --apply      # same, with an Editor token instead
 SANITY_AUTH_TOKEN=... npm run migrate:content -- --rollback --apply
 ```
 
@@ -107,6 +108,10 @@ In the Sanity dashboard (API, Webhooks) create a webhook:
 
 ## Modernisation status
 
-Phases 0 (security and cleanup), 1 (foundation), 2 (design system) and 3 (Sanity model,
-migration script ready, not yet applied) are done.
-Home is still served by `src/pages/index.tsx`; it moves to `src/app` in Phase 4.
+Phases 0 to 3 are done and Phase 4 (home page, hero, contact, legacy cutover) is built. The
+Pages Router code is gone, so **do not merge to `main` until the Experience, Architecture and
+About pages exist**: the live site's Experience, Skills and Projects sections are not yet
+replaced. Flip `live` in `src/lib/navigation.ts` as each route ships.
+
+The hero shows the Silambam photograph from Profile > Hero image when set, and is typographic
+(with the layered-stack diagram) when it is empty.

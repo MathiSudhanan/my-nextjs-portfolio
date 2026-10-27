@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Mandala } from "@/components/patterns/Mandala";
+import { CaseCard } from "@/components/ui/CaseCard";
 import { Tag, StatusPill, DimensionLine } from "@/components/ui/Badges";
 import { Button, ButtonLink } from "@/components/ui/Button";
 import { Icon, type IconName } from "@/components/ui/Icon";
@@ -227,6 +228,37 @@ export default function DesignSystemPage() {
             </div>
             <p className="text-small text-muted">No drop shadows. Depth comes from surface steps and hairlines.</p>
           </Block>
+        </div>
+      </Section>
+
+      <Section
+        id="case-card"
+        eyebrow="Components"
+        heading="Case card"
+        description="Example content only. The real cards come from the Case study documents in Sanity."
+      >
+        <div className="grid gap-6 lg:grid-cols-2">
+          <CaseCard
+            title="Monolith to modular platform"
+            outcome="Cut checkout p95 from 1.8 s to 240 ms while still shipping weekly."
+            summary="Split a twelve-year-old .NET Framework monolith into modules without pausing releases."
+            role="Lead architect"
+            domain="Logistics"
+            period="2023–24"
+            teamSize={11}
+            techStack={[".NET", "Next.js", "SQL Server", "Azure"]}
+            href={null}
+          />
+          <CaseCard
+            title="Real-time pricing engine"
+            outcome="Reprices 40,000 SKUs in under two seconds."
+            summary="An event-driven Spring Boot service with a React operations console."
+            role="Tech lead"
+            domain="Retail"
+            period="2021–22"
+            techStack={["Spring Boot", "Kafka", "React"]}
+            href={null}
+          />
         </div>
       </Section>
 

@@ -1,13 +1,24 @@
 export type NavItem = { label: string; href: string };
+type Route = NavItem & { live: boolean };
 
-// Routes arrive in later phases; the header and footer are built for the final set.
-// Articles joins `primaryNav` once three articles are published.
+// Flip `live` to true when a route ships. The header, footer and cards only link to
+// live routes, so a half-built site never shows a dead link.
+export const routes = {
+  architecture: { label: "Architecture", href: "/architecture", live: false },
+  experience: { label: "Experience", href: "/experience", live: false },
+  about: { label: "About", href: "/about", live: false },
+  martialArts: { label: "Martial Arts", href: "/martial-arts", live: false },
+  cv: { label: "CV", href: "/cv", live: false },
+  contact: { label: "Contact", href: "/contact", live: true },
+} satisfies Record<string, Route>;
+
+// Articles join the primary navigation once three are published.
 export const primaryNav: readonly NavItem[] = [
-  { label: "Architecture", href: "/architecture" },
-  { label: "Experience", href: "/experience" },
-  { label: "About", href: "/about" },
-  { label: "Martial Arts", href: "/martial-arts" },
-];
+  routes.architecture,
+  routes.experience,
+  routes.about,
+  routes.martialArts,
+].filter((route) => route.live);
 
-export const cvLink: NavItem = { label: "CV", href: "/cv" };
-export const contactLink: NavItem = { label: "Contact", href: "/contact" };
+export const cvRoute: NavItem | null = routes.cv.live ? routes.cv : null;
+export const contactLink: NavItem = routes.contact;

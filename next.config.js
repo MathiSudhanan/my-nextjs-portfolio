@@ -16,9 +16,9 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   images: {
-    remotePatterns: [
-      { protocol: "https", hostname: "cdn.sanity.io", pathname: "/images/**" },
-    ],
+    // Sanity's CDN resizes images (see src/lib/sanity/image-loader.ts).
+    loader: "custom",
+    loaderFile: "./src/lib/sanity/image-loader.ts",
   },
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];

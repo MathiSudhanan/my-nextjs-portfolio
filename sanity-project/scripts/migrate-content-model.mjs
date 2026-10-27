@@ -5,6 +5,7 @@
  *   node scripts/migrate-content-model.mjs                 dry run (default): prints the plan, writes nothing
  *   node scripts/migrate-content-model.mjs --file x.json   dry run against a backup file instead of the live dataset
  *   node scripts/migrate-content-model.mjs --apply         apply the plan (needs SANITY_AUTH_TOKEN, an Editor token)
+ *   npx sanity exec scripts/migrate-content-model.mjs --with-user-token -- --apply   same, using your `sanity login` session
  *   node scripts/migrate-content-model.mjs --rollback      dry run of the rollback; add --apply to execute it
  *
  * What it does
@@ -346,13 +347,29 @@ export function simulate(docs, mutations) {
 
 // ---------------------------------------------------------------- IO
 
+/**
+ * The write token: SANITY_AUTH_TOKEN, or, when run through
+ * `sanity exec scripts/migrate-content-model.mjs --with-user-token -- ...`,
+ * the logged-in CLI user's token (so nothing needs to be copied or pasted).
+ */
+async function resolveToken() {
+  if (process.env.SANITY_AUTH_TOKEN) return process.env.SANITY_AUTH_TOKEN
+  try {
+    const {getCliClient} = await import('sanity/cli')
+    return getCliClient({apiVersion: '2025-10-01', projectId: PROJECT_ID, dataset: DATASET}).config().token
+  } catch {
+    return undefined
+  }
+}
+
 async function loadDocs(file) {
   if (file) {
     const json = JSON.parse(readFileSync(file, 'utf8'))
     return json.result ?? json
   }
   const query = '*[!(_type match "system.*") && !(_type match "sanity.*")]'
-  const headers = process.env.SANITY_AUTH_TOKEN ? {Authorization: `Bearer ${process.env.SANITY_AUTH_TOKEN}`} : {}
+  const readToken = await resolveToken()
+  const headers = readToken ? {Authorization: `Bearer ${readToken}`} : {}
   const res = await fetch(`${API}/query/${DATASET}?query=${encodeURIComponent(query)}`, {headers})
   if (!res.ok) throw new Error(`Could not read the dataset: ${res.status} ${await res.text()}`)
   return (await res.json()).result
@@ -393,8 +410,13 @@ async function main() {
     console.log('\nDry run only. Re-run with --apply to write (needs SANITY_AUTH_TOKEN).')
     return
   }
-  const token = process.env.SANITY_AUTH_TOKEN
-  if (!token) throw new Error('--apply needs SANITY_AUTH_TOKEN (an Editor token or your CLI auth token)')
+  const token = await resolveToken()
+  if (!token) {
+    throw new Error(
+      '--apply needs a write token: set SANITY_AUTH_TOKEN, or run it with ' +
+        '`sanity exec scripts/migrate-content-model.mjs --with-user-token -- --apply` after `sanity login`',
+    )
+  }
   const res = await fetch(`${API}/mutate/${DATASET}?returnIds=true&visibility=sync`, {
     method: 'POST',
     headers: {'Content-Type': 'application/json', Authorization: `Bearer ${token}`},

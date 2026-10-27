@@ -10,7 +10,7 @@ import { NavLinks } from "./NavLinks";
 
 type Props = {
   items: readonly NavItem[];
-  cv: NavItem;
+  cv: NavItem | null;
   contact: NavItem;
 };
 
@@ -65,9 +65,11 @@ export function MobileMenu({ items, cv, contact }: Props) {
           <ButtonLink href={contact.href} size="lg" arrow="right" onClick={close}>
             {contact.label}
           </ButtonLink>
-          <ButtonLink href={cv.href} size="lg" variant="outline" onClick={close}>
-            {cv.label}
-          </ButtonLink>
+          {cv ? (
+            <ButtonLink href={cv.href} size="lg" variant="outline" onClick={close}>
+              {cv.label}
+            </ButtonLink>
+          ) : null}
         </div>
       </dialog>
     </>

@@ -8,6 +8,10 @@
  * `line` is decorative. Use `line-strong` (3.0:1) for control borders.
  */
 @theme {
+  /* Only the semantic tokens below exist: Tailwind's default palette is removed so
+     a stray `text-gray-500` cannot bypass the design system. */
+  --color-*: initial;
+
   /* Surfaces */
   --color-bg: #0b1221;
   --color-surface: #111827;
@@ -70,7 +74,6 @@
   /* Layout */
   --container-page: 75rem;
   --container-prose: 42.5rem;
-  --breakpoint-xs: 475px;
 
   /* Motion: everything enters fast and settles calmly */
   --ease-settle: cubic-bezier(0.2, 0, 0, 1);
