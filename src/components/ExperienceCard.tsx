@@ -16,7 +16,7 @@ const ExperienceCard = ({ experience }: Props) => {
   
   return (
     <article
-      className="relative flex flex-col ml-0 rounded-lg items-center md:space-y-7 flex-shrink-0 w-[98%]
+      className="relative flex flex-col ml-0 rounded-lg items-center md:space-y-7 shrink-0 w-[98%]
     md:w-[600px] xl:w-[900xl] snap-center bg-[#292929] p-2 md:p-10 md:hover:opacity-100 md:opacity-40 cursor-pointer 
     md:transition-opacity md:duration-200 md:overflow-hidden"
     >

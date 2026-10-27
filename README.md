@@ -18,16 +18,39 @@ Production: https://www.mathisudhanan.com
 
 ```
 src/
-  app/                 App Router: layout, routes, /api/revalidate webhook
+  app/                 App Router: layout, fonts, globals.css, routes, /api/revalidate
+    design-system/     living style guide (dev and Vercel previews only, noindex)
+  components/
+    ui/                Button, Typography, Layout (Container, Section), Badges, Icon
+    layout/            Header, MobileMenu, NavLinks, Footer, SkipLink, Brand
+    patterns/          Mandala (decorative circular geometry)
   lib/
     env.ts             validated environment variables
     site.ts            site name, description, canonical URL
+    navigation.ts      primary navigation, CV and contact links
+    cn.ts              class-name joiner
     sanity/            server-only client, tagged fetch, queries, image builder
+  styles/
+    theme.css          design tokens (@theme): colour, type scale, spacing, motion
+    base.css           base layer: focus ring, selection, reduced motion
+    utilities.css      type roles, page gutter, grid pattern, header hairline
+    legacy.css         Pages Router styles, removed with src/pages in Phase 4
   sanity.types.ts      generated, do not edit
-  pages/ components/ hooks/ Utils/ sanity.ts typings.d.ts styles/
+  pages/ components/*.tsx hooks/ Utils/ sanity.ts typings.d.ts
                        legacy Pages Router code, removed as each page moves to app/
 sanity-project/        Sanity Studio (own package.json), deployed separately
 ```
+
+## Design system
+
+Tailwind CSS 4 with the tokens in `src/styles/theme.css`. The site is dark only: cyan
+fails contrast on light backgrounds. Colours are semantic (`bg-bg`, `bg-surface`,
+`text-fg`, `text-muted`, `text-accent`, `border-line`); typography uses the role
+utilities `type-display`, `type-h1`, `type-h2`, `type-h3`, `type-lead`, `type-label`
+and `type-data`. Run the app and open `/design-system` for every token and component.
+
+The App Router and legacy Pages Router stylesheets are built separately from scoped
+sources, so legacy classes never reach new pages and the reverse.
 
 ## Data and caching
 
@@ -54,5 +77,5 @@ In the Sanity dashboard (API, Webhooks) create a webhook:
 
 ## Modernisation status
 
-Phase 0 (security and cleanup) and Phase 1 (foundation) are done. Home is still
-served by `src/pages/index.tsx`; it moves to `src/app` in Phase 4.
+Phases 0 (security and cleanup), 1 (foundation) and 2 (design system) are done.
+Home is still served by `src/pages/index.tsx`; it moves to `src/app` in Phase 4.

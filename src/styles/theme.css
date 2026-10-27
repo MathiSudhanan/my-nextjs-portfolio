@@ -1,0 +1,78 @@
+/*
+ * Design tokens for the App Router site. Dark theme only: cyan fails contrast on
+ * light backgrounds, so there is no light palette (the CV page gets a print
+ * stylesheet instead).
+ *
+ * Contrast of text tokens (WCAG): fg 12.6:1, fg-strong 15.2:1, muted 7.3:1 on bg;
+ * accent 11.0:1; gold 7.8:1; signal 9.7:1; danger 6.8:1. Navy text on accent 11.0:1.
+ * `line` is decorative. Use `line-strong` (3.0:1) for control borders.
+ */
+@theme {
+  /* Surfaces */
+  --color-bg: #0b1221;
+  --color-surface: #111827;
+  --color-raised: #172033;
+
+  /* Lines */
+  --color-line: rgb(203 213 225 / 0.12);
+  --color-line-strong: rgb(203 213 225 / 0.4);
+
+  /* Text */
+  --color-fg: #cbd5e1;
+  --color-fg-strong: #e2e8f0;
+  --color-muted: #94a3b8;
+
+  /* Accent: flat cyan for links, focus, primary actions and diagram lines */
+  --color-accent: #00d9ff;
+  --color-accent-hover: #5ce7ff;
+  --color-accent-fg: #0b1221;
+
+  /* Gold is reserved for the Martial Arts page and one small flourish elsewhere */
+  --color-gold: #c8a15b;
+
+  /* Functional */
+  --color-signal: #34d399;
+  --color-danger: #f87171;
+
+  /*
+   * Fonts: next/font defines the --font-* variables on <html> (see src/app/fonts.ts).
+   * The fallbacks keep these valid if the variable is missing.
+   */
+  --font-display: var(--font-archivo, "Arial Narrow"), system-ui, sans-serif;
+  --font-sans: var(--font-plex-sans, system-ui), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex-mono, ui-monospace), ui-monospace, "Cascadia Mono", Consolas, monospace;
+
+  /* Type scale (fluid). Roles that combine family, width and weight: utilities.css */
+  --text-display: clamp(2.25rem, 6vw, 5rem);
+  --text-display--line-height: 0.98;
+  --text-h1: clamp(2.25rem, 5vw, 4rem);
+  --text-h1--line-height: 1.02;
+  --text-h2: clamp(1.75rem, 3.2vw, 2.75rem);
+  --text-h2--line-height: 1.08;
+  --text-h3: clamp(1.25rem, 2vw, 1.75rem);
+  --text-h3--line-height: 1.2;
+  --text-lead: clamp(1.0625rem, 1.4vw, 1.1875rem);
+  --text-lead--line-height: 1.6;
+  --text-body: 1rem;
+  --text-body--line-height: 1.7;
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.55;
+  --text-label: 0.75rem;
+  --text-label--line-height: 1.4;
+
+  /* Spacing: Tailwind's 4px base is kept. Vertical rhythm between page bands: */
+  --spacing-section: clamp(3.5rem, 8vw, 6rem);
+
+  /* Shape: precise, not soft. No drop shadows; depth comes from surfaces and lines. */
+  --radius-control: 4px;
+  --radius-card: 8px;
+
+  /* Layout */
+  --container-page: 75rem;
+  --container-prose: 42.5rem;
+  --breakpoint-xs: 475px;
+
+  /* Motion: everything enters fast and settles calmly */
+  --ease-settle: cubic-bezier(0.2, 0, 0, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+}

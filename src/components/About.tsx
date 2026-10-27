@@ -53,7 +53,7 @@ const About = ({ pageInfo }: Props) => {
             x: 0,
           }}
           src={urlFor(pageInfo.profilePic).url()}
-          className=" bg-gray-300 -mb-20 md:mb-0 flex-shrink-0 w-28 h-28 md:w-56 md:h-56 rounded-full object-cover md:rounded-lg  md:h-95 xl:w-[300px] xl:h-[400px]"
+          className=" bg-gray-300 -mb-20 md:mb-0 shrink-0 w-28 h-28 md:w-56 md:h-56 rounded-full object-cover md:rounded-lg  md:h-95 xl:w-[300px] xl:h-[400px]"
         />
         <div className="relative pt-20 md:pt-0 space-y-10 px-0 md:px-10">
           <h4 className="text-2xl md:text-4xl font-semibold">

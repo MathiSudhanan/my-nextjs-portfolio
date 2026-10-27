@@ -1,0 +1,102 @@
+/* Typographic roles: family, width, weight and size travel together. */
+
+@utility type-display {
+  font-family: var(--font-display);
+  font-stretch: 125%;
+  font-weight: 800;
+  font-size: var(--text-display);
+  line-height: var(--text-display--line-height);
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+@utility type-h1 {
+  font-family: var(--font-display);
+  font-stretch: 118%;
+  font-weight: 750;
+  font-size: var(--text-h1);
+  line-height: var(--text-h1--line-height);
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+@utility type-h2 {
+  font-family: var(--font-display);
+  font-stretch: 112%;
+  font-weight: 700;
+  font-size: var(--text-h2);
+  line-height: var(--text-h2--line-height);
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+@utility type-h3 {
+  font-family: var(--font-display);
+  font-stretch: 100%;
+  font-weight: 650;
+  font-size: var(--text-h3);
+  line-height: var(--text-h3--line-height);
+  text-wrap: balance;
+}
+
+@utility type-lead {
+  font-size: var(--text-lead);
+  line-height: var(--text-lead--line-height);
+  max-width: 58ch;
+}
+
+@utility type-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  line-height: var(--text-label--line-height);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Numbers that line up: metrics, dates, years. */
+@utility type-data {
+  font-family: var(--font-display);
+  font-stretch: 100%;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Page gutter that also clears a phone's side system bars. */
+@utility page-gutter {
+  padding-left: max(1.25rem, env(safe-area-inset-left, 0px));
+  padding-right: max(1.25rem, env(safe-area-inset-right, 0px));
+
+  @media (min-width: 48rem) {
+    padding-left: max(2rem, env(safe-area-inset-left, 0px));
+    padding-right: max(2rem, env(safe-area-inset-right, 0px));
+  }
+}
+
+/* Architectural grid: hairlines on a 48px module, fading out toward the edges. */
+@utility pattern-grid {
+  background-image:
+    linear-gradient(var(--color-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-line) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
+}
+
+/* The header hairline appears only once the page has scrolled (no JavaScript).
+   Browsers without scroll-driven animations keep a permanent hairline. */
+@utility header-hairline {
+  border-bottom: 1px solid var(--color-line);
+
+  @supports (animation-timeline: scroll()) {
+    border-bottom-color: transparent;
+    animation: header-hairline linear both;
+    animation-timeline: scroll(root);
+    animation-range: 0 3rem;
+  }
+}
+
+@keyframes header-hairline {
+  to {
+    border-bottom-color: var(--color-line);
+  }
+}

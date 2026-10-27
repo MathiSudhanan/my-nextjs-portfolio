@@ -17,12 +17,21 @@ export default defineConfig([
     // Pages Router code that is deleted as each page moves to src/app.
     // Do not add new files here.
     'src/pages/**',
-    'src/components/**',
+    'src/components/About.tsx',
+    'src/components/BackgroundCircles.tsx',
+    'src/components/Carousel/**',
+    'src/components/ContactMe.tsx',
+    'src/components/ExperienceCard.tsx',
+    'src/components/Header.tsx',
+    'src/components/Hero.tsx',
+    'src/components/ProjectCard/**',
+    'src/components/Projects.tsx',
+    'src/components/Skill.tsx',
+    'src/components/Skills.tsx',
+    'src/components/WorkExperience.tsx',
     'src/hooks/**',
     'src/Utils/**',
     'src/sanity.ts',
     'src/typings.d.ts',
-    // Tailwind 3 config; replaced by CSS tokens in Phase 2.
-    'tailwind.config.js',
   ]),
 ])

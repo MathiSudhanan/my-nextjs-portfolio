@@ -342,11 +342,21 @@ export type ExperiencesQueryResult = Array<{
   }> | null;
 }>;
 
+// Source: ../src/lib/sanity/queries.ts
+// Variable: socialsQuery
+// Query: *[_type == "social"] | order(title asc){  _id,  title,  url}
+export type SocialsQueryResult = Array<{
+  _id: string;
+  title: string | null;
+  url: string | null;
+}>;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     '*[_type == "pageInfo"][0]{\n  _id,\n  name,\n  role,\n  email,\n  backgroundInformation,\n  heroImage,\n  profilePic\n}': PageInfoQueryResult;
     '*[_type == "experience"] | order(dateStarted desc){\n  _id,\n  jobTitle,\n  company,\n  companyImage,\n  dateStarted,\n  dateEnded,\n  isCurrentlyWorkingHere,\n  points,\n  "technologies": technologies[]->{ _id, name, image }\n}': ExperiencesQueryResult;
+    '*[_type == "social"] | order(title asc){\n  _id,\n  title,\n  url\n}': SocialsQueryResult;
   }
 }

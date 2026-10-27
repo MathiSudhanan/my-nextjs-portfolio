@@ -1,0 +1,11 @@
+/* App Router styles. Sources are scoped so legacy Pages Router classes never end up here. */
+@import "tailwindcss" source(none);
+@source "../app";
+@source "../components/ui";
+@source "../components/layout";
+@source "../components/patterns";
+@source "../features";
+
+@import "../styles/theme.css";
+@import "../styles/base.css";
+@import "../styles/utilities.css";

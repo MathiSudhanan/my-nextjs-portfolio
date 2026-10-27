@@ -71,10 +71,10 @@ const Carousel = ({ images, duration, width, height }: slideProps) => {
         <img
           src={urlFor(images[currentIndex]).url()} alt=""
           className="w-full h-full rounded-2xl" />
-      <div className="absolute rounded-full opacity-9 bg-gray-200 hidden group-hover:block top-[50%] -translate-x-0 -translate-y-[-50%] md:left-5 sm:left-3 text-black cursor-pointer">
+      <div className="absolute rounded-full opacity-9 bg-gray-200 hidden group-hover:block top-[50%] translate-x-0 translate-y-[50%] md:left-5 sm:left-3 text-black cursor-pointer">
         <LeftArrow onClickHandler={prevSlide} />
       </div>
-      <div className="absolute rounded-full opacity-9 bg-gray-200 hidden group-hover:block top-[50%] -translate-x-0 -translate-y-[-50%] right-5 text-black cursor-pointer">
+      <div className="absolute rounded-full opacity-9 bg-gray-200 hidden group-hover:block top-[50%] translate-x-0 translate-y-[50%] right-5 text-black cursor-pointer">
         <RightArrow onClickHandler={nextSlide} />
       </div>
       <div className="relative flex justify-center align center top-5 ">

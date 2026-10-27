@@ -28,3 +28,10 @@ export const experiencesQuery = defineQuery(`*[_type == "experience"] | order(da
   "technologies": technologies[]->{ _id, name, image }
 }`);
 export const experiencesTags = [tagForType("experience"), tagForType("skill")] as const;
+
+export const socialsQuery = defineQuery(`*[_type == "social"] | order(title asc){
+  _id,
+  title,
+  url
+}`);
+export const socialsTags = [tagForType("social")] as const;
