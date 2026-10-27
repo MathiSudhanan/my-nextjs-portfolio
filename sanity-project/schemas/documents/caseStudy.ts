@@ -94,20 +94,6 @@ export default defineType({
         'If on, describe the client generically (for example "a European logistics platform").',
       initialValue: false,
     }),
-    defineField({
-      name: 'featured',
-      title: 'Featured on the home page',
-      type: 'boolean',
-      group: 'overview',
-      initialValue: false,
-    }),
-    defineField({
-      name: 'order',
-      title: 'Order',
-      type: 'number',
-      group: 'overview',
-      description: 'Lower numbers come first.',
-    }),
     {
       ...imageField({name: 'heroImage', title: 'Hero figure', required: true, caption: true}),
       group: 'overview',
@@ -198,9 +184,8 @@ export default defineType({
 
     defineField({name: 'seo', title: 'SEO', type: 'seo', group: 'seo'}),
   ],
-  orderings: [
-    {title: 'Order', name: 'order', by: [{field: 'order', direction: 'asc'}]},
-    {title: 'Title', name: 'title', by: [{field: 'title', direction: 'asc'}]},
-  ],
+  // Which case studies appear on the home page, and in what order, is set on the
+  // Profile document (Featured case studies), not here.
+  orderings: [{title: 'Title', name: 'title', by: [{field: 'title', direction: 'asc'}]}],
   preview: {select: {title: 'title', subtitle: 'outcome', media: 'heroImage'}},
 })

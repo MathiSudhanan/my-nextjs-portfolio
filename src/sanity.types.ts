@@ -473,8 +473,6 @@ export type CaseStudy = {
   duration?: string;
   teamSize?: number;
   confidential?: boolean;
-  featured?: boolean;
-  order?: number;
   heroImage: {
     asset?: SanityImageAssetReference;
     media?: unknown;
