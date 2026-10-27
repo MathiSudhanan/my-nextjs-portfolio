@@ -1,5 +1,5 @@
 import React from "react";
-import { PhoneIcon, MapPinIcon, EnvelopeIcon } from "@heroicons/react/24/solid";
+import { EnvelopeIcon } from "@heroicons/react/24/solid";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useMediaQuery } from "../hooks/MediaQuery";
 
@@ -34,7 +34,6 @@ const ContactMe = ({}: Props) => {
   } else {
     sectionClass += " h-screen";
   }
-  console.log(sectionClass);
 
   return (
     <div className={sectionClass}>
@@ -50,24 +49,9 @@ const ContactMe = ({}: Props) => {
         </h4>
 
         <div className="space-y-5 md:space-y-10">
-          <div className="flex items-center md: space-y-3 space-x-5 justify-center">
-            <PhoneIcon className="text-[#F7AB0A] h-6 w-65 md:h-7 md:w-7 animate-pulse" />
-            <p className="text-1xl lg:text-2xl">+91 9629581508</p>
-          </div>
-
           <div className="flex items-center space-x-5 justify-center">
             <EnvelopeIcon className="text-[#F7AB0A] h-6 w-6 md:h-7 md:w-7 animate-pulse" />
             <p className="text-1xl lg:text-2xl">mathisudhanan@gmail.com</p>
-          </div>
-
-          <div className="flex items-center space-x-5 justify-center">
-            <MapPinIcon className="text-[#F7AB0A] h-7 w-7 animate-pulse" />
-            <p className="text-1xl lg:text-2xl">1/13 Satheeswara Nagar</p>
-
-            {/* <div className="flex flex-col items-start">
-            <p className="text-2xl">Vellalore (po)</p>
-            <p className="text-2xl">Coimbatore-111</p>
-          </div> */}
           </div>
           <form
             className="flex flex-col space-y-2 w-fit mx-auto"

@@ -20,7 +20,6 @@ const About = ({ pageInfo }: Props) => {
   } else {
     sectionClass += " h-screen";
   }
-  console.log(sectionClass);
 
   return (
     <motion.div

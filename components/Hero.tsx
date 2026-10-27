@@ -50,11 +50,8 @@ const Hero = ({ pageInfo }: Props) => {
 
       <img
         src={urlFor(pageInfo.heroImage).url()}
-        className="relative rounded-full h-32 w-32 mx-auto object-cover bg-gray-300 cursor-pointer"
+        className="relative rounded-full h-32 w-32 mx-auto object-cover bg-gray-300"
         alt="Picture of the author"
-        onClick={(e) => {
-          alert("hi");
-        }}
       />
       <div className="z-20">
         <h2 className="text-sm uppercase text-gray-500 pb-2 tracking-[15px]">

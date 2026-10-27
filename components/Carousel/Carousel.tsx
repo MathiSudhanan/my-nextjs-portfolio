@@ -17,7 +17,6 @@ interface slideProps{
 const Carousel = ({ images, duration, width, height }: slideProps) => {
 
   const isSmall = useMediaQuery("(min-width: 500px)");
-  console.log(`isSmall ${isSmall}`);
   const isLandscape = useMediaQuery("(orientation: landscape)");
   
   const [currentIndex, setCurrentIndex] = useState(0);
