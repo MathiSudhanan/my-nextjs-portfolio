@@ -1,0 +1,206 @@
+import {defineArrayMember, defineField, defineType} from 'sanity'
+import {imageField, slugField} from '../fields'
+
+const section = (
+  name: string,
+  title: string,
+  description: string,
+  group: string,
+  required = false,
+) =>
+  defineField({
+    name,
+    title,
+    description,
+    type: 'richText',
+    group,
+    validation: required ? (r) => r.required() : undefined,
+  })
+
+export default defineType({
+  name: 'caseStudy',
+  title: 'Case study',
+  type: 'document',
+  description: 'A flagship architecture story. Aim for three at launch.',
+  groups: [
+    {name: 'overview', title: 'Overview', default: true},
+    {name: 'story', title: 'Story'},
+    {name: 'architecture', title: 'Architecture'},
+    {name: 'outcomes', title: 'Outcomes'},
+    {name: 'seo', title: 'SEO'},
+  ],
+  fields: [
+    defineField({
+      name: 'title',
+      title: 'Title',
+      type: 'string',
+      group: 'overview',
+      validation: (r) => r.required().max(80),
+    }),
+    {...slugField, group: 'overview'},
+    defineField({
+      name: 'outcome',
+      title: 'Outcome in one sentence',
+      type: 'string',
+      group: 'overview',
+      description:
+        'Lead with a number. Example: Cut checkout p95 from 1.8 s to 240 ms while shipping weekly.',
+      validation: (r) => r.required().max(140),
+    }),
+    defineField({
+      name: 'summary',
+      title: 'Summary',
+      type: 'text',
+      rows: 3,
+      group: 'overview',
+      description: 'Shown on cards and in search results.',
+      validation: (r) => r.required().max(240),
+    }),
+    defineField({
+      name: 'role',
+      title: 'Your role',
+      type: 'string',
+      group: 'overview',
+      validation: (r) => r.required(),
+    }),
+    defineField({name: 'domain', title: 'Domain', type: 'string', group: 'overview'}),
+    defineField({
+      name: 'period',
+      title: 'Period',
+      type: 'string',
+      group: 'overview',
+      description: 'For example: 2023–24',
+    }),
+    defineField({
+      name: 'duration',
+      title: 'Duration',
+      type: 'string',
+      group: 'overview',
+      description: 'For example: 14 months',
+    }),
+    defineField({
+      name: 'teamSize',
+      title: 'Team size',
+      type: 'number',
+      group: 'overview',
+      validation: (r) => r.integer().min(1),
+    }),
+    defineField({
+      name: 'confidential',
+      title: 'Confidential client',
+      type: 'boolean',
+      group: 'overview',
+      description:
+        'If on, describe the client generically (for example "a European logistics platform").',
+      initialValue: false,
+    }),
+    defineField({
+      name: 'featured',
+      title: 'Featured on the home page',
+      type: 'boolean',
+      group: 'overview',
+      initialValue: false,
+    }),
+    defineField({
+      name: 'order',
+      title: 'Order',
+      type: 'number',
+      group: 'overview',
+      description: 'Lower numbers come first.',
+    }),
+    {
+      ...imageField({name: 'heroImage', title: 'Hero figure', required: true, caption: true}),
+      group: 'overview',
+    },
+    defineField({
+      name: 'techStack',
+      title: 'Technologies',
+      type: 'array',
+      group: 'overview',
+      of: [defineArrayMember({type: 'reference', to: [{type: 'technology'}]})],
+      validation: (r) => r.unique(),
+    }),
+    defineField({
+      name: 'relatedArticles',
+      title: 'Related articles',
+      type: 'array',
+      group: 'overview',
+      of: [defineArrayMember({type: 'reference', to: [{type: 'article'}]})],
+    }),
+
+    section('problem', 'Problem', 'What was wrong, in terms the business would use.', 'story', true),
+    section('context', 'Context', 'The company, the system, the team and the history.', 'story'),
+    defineField({
+      name: 'constraints',
+      title: 'Constraints',
+      type: 'array',
+      group: 'story',
+      description: 'Budget, legacy, skills, compliance, deadline. Five at most.',
+      of: [defineArrayMember({type: 'string'})],
+      validation: (r) => r.max(5),
+    }),
+    section(
+      'leadership',
+      'Leadership',
+      'How the team was organised and what you changed in the way it worked.',
+      'story',
+    ),
+
+    section(
+      'architecture',
+      'Architecture',
+      'The design. Add up to three diagrams: context, containers, and data flow or deployment.',
+      'architecture',
+      true,
+    ),
+    defineField({
+      name: 'technologyDecisions',
+      title: 'Technology decisions',
+      type: 'array',
+      group: 'architecture',
+      of: [defineArrayMember({type: 'decisionRecord'})],
+      validation: (r) => r.min(1).warning('Add at least one decision with its rejected options.'),
+    }),
+    defineField({
+      name: 'tradeOffs',
+      title: 'Trade-offs',
+      type: 'array',
+      group: 'architecture',
+      of: [defineArrayMember({type: 'tradeOff'})],
+    }),
+    section('dataFlow', 'Data flow', 'How data moves through the system.', 'architecture'),
+    section('security', 'Security', 'What could be attacked, and what guards it.', 'architecture'),
+    section(
+      'scalability',
+      'Scalability',
+      'Where it scales, where it will not, and why.',
+      'architecture',
+    ),
+    section('performance', 'Performance', 'What you measured and what you changed.', 'architecture'),
+    section('deployment', 'Deployment', 'How it ships and runs.', 'architecture'),
+
+    defineField({
+      name: 'metrics',
+      title: 'Measured outcomes',
+      type: 'array',
+      group: 'outcomes',
+      description: 'One to four, each with a source.',
+      of: [defineArrayMember({type: 'metric'})],
+      validation: (r) => r.max(4),
+    }),
+    section(
+      'lessons',
+      'Lessons learned',
+      'What you would do differently. Senior readers look at this first.',
+      'outcomes',
+      true,
+    ),
+
+    defineField({name: 'seo', title: 'SEO', type: 'seo', group: 'seo'}),
+  ],
+  orderings: [
+    {title: 'Order', name: 'order', by: [{field: 'order', direction: 'asc'}]},
+    {title: 'Title', name: 'title', by: [{field: 'title', direction: 'asc'}]},
+  ],
+  preview: {select: {title: 'title', subtitle: 'outcome', media: 'heroImage'}},
+})

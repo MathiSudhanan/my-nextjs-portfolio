@@ -35,3 +35,27 @@ export const socialsQuery = defineQuery(`*[_type == "social"] | order(title asc)
   url
 }`);
 export const socialsTags = [tagForType("social")] as const;
+
+// New content model (Phase 3). Pages adopt these in Phases 4-7.
+
+export const siteSettingsQuery = defineQuery(`*[_type == "siteSettings"][0]{
+  name,
+  email,
+  location,
+  availability,
+  socials[]{ _key, platform, title, url }
+}`);
+export const siteSettingsTags = [tagForType("siteSettings")] as const;
+
+export const profileQuery = defineQuery(`*[_type == "profile"][0]{
+  headline,
+  subheadline,
+  positioning,
+  startYear,
+  aboutStory,
+  leadership,
+  martialArtsIntro,
+  portrait,
+  heroImage
+}`);
+export const profileTags = [tagForType("profile")] as const;

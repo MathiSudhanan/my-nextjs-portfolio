@@ -24,3 +24,8 @@
 
 # Typescript
 *.tsbuildinfo
+
+# Dataset backups contain private fields (phone, address). Never commit them.
+/backups
+*.ndjson
+*.tar.gz

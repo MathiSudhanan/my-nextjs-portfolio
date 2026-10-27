@@ -15,14 +15,56 @@
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
 // Source: schema.json
-export type Social = {
-  _id: string;
-  _type: "social";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: string;
-  url?: string;
+export type CodeSnippet = {
+  _type: "codeSnippet";
+  language?:
+    | "csharp"
+    | "java"
+    | "typescript"
+    | "javascript"
+    | "sql"
+    | "json"
+    | "yaml"
+    | "bash"
+    | "text";
+  filename?: string;
+  code: string;
+};
+
+export type Callout = {
+  _type: "callout";
+  tone?: "note" | "warning";
+  body: string;
+};
+
+export type Metric = {
+  _type: "metric";
+  label: string;
+  before?: string;
+  after?: string;
+  source: string;
+};
+
+export type TradeOff = {
+  _type: "tradeOff";
+  choice: string;
+  gained?: string;
+  gaveUp?: string;
+};
+
+export type DecisionRecord = {
+  _type: "decisionRecord";
+  code?: string;
+  title: string;
+  context?: string;
+  decision?: string;
+  consequences?: string;
+  rejected?: Array<{
+    option: string;
+    reason?: string;
+    _type: "rejectedOption";
+    _key: string;
+  }>;
 };
 
 export type SanityImageAssetReference = {
@@ -32,51 +74,81 @@ export type SanityImageAssetReference = {
   [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
 };
 
-export type SkillReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "skill";
-};
+export type RichText = Array<
+  | {
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal" | "h3" | "h4" | "blockquote";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<{
+        href: string;
+        _type: "link";
+        _key: string;
+      }>;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }
+  | {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      decorative?: boolean;
+      caption?: string;
+      credit?: string;
+      _type: "figure";
+      _key: string;
+    }
+  | {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      description: string;
+      caption?: string;
+      _type: "diagram";
+      _key: string;
+    }
+  | ({
+      _key: string;
+    } & DecisionRecord)
+  | ({
+      _key: string;
+    } & Callout)
+  | ({
+      _key: string;
+    } & CodeSnippet)
+>;
 
-export type Project = {
-  _id: string;
-  _type: "project";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  title?: string;
-  images?: Array<{
+export type Seo = {
+  _type: "seo";
+  metaTitle?: string;
+  metaDescription?: string;
+  ogImage?: {
     asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     _type: "image";
-    _key: string;
-  }>;
-  summary?: string;
-  technologies?: Array<
-    {
-      _key: string;
-    } & SkillReference
-  >;
-  linkToBuild?: string;
+  };
+  noIndex?: boolean;
 };
 
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top: number;
-  bottom: number;
-  left: number;
-  right: number;
-};
-
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x: number;
-  y: number;
-  height: number;
-  width: number;
+export type Social = {
+  _id: string;
+  _type: "social";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  url?: string;
 };
 
 export type Skill = {
@@ -96,30 +168,20 @@ export type Skill = {
   };
 };
 
-export type Experience = {
-  _id: string;
-  _type: "experience";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  jobTitle?: string;
-  companyImage?: {
-    asset?: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
-  company?: string;
-  dateStarted?: string;
-  dateEnded?: string;
-  isCurrentlyWorkingHere?: boolean;
-  technologies?: Array<
-    {
-      _key: string;
-    } & SkillReference
-  >;
-  points?: Array<string>;
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x: number;
+  y: number;
+  height: number;
+  width: number;
 };
 
 export type SocialReference = {
@@ -160,6 +222,394 @@ export type PageInfo = {
       _key: string;
     } & SocialReference
   >;
+};
+
+export type CaseStudyReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "caseStudy";
+};
+
+export type Testimonial = {
+  _id: string;
+  _type: "testimonial";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  quote: string;
+  name: string;
+  role?: string;
+  company?: string;
+  permission?: boolean;
+  caseStudy?: CaseStudyReference;
+  photo?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    decorative?: boolean;
+    _type: "image";
+  };
+};
+
+export type Certification = {
+  _id: string;
+  _type: "certification";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+  issuer: string;
+  year?: number;
+  credentialUrl?: string;
+  badge?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+};
+
+export type TechnologyReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "technology";
+};
+
+export type Article = {
+  _id: string;
+  _type: "article";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  kind: "essay" | "adr";
+  publishedAt: string;
+  excerpt: string;
+  cover?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    decorative?: boolean;
+    caption?: string;
+    _type: "image";
+  };
+  body: RichText;
+  techStack?: Array<
+    {
+      _key: string;
+    } & TechnologyReference
+  >;
+  relatedCaseStudy?: CaseStudyReference;
+  seo?: Seo;
+};
+
+export type MartialArt = {
+  _id: string;
+  _type: "martialArt";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+  slug: Slug;
+  nativeName?: string;
+  startYear?: number;
+  school?: string;
+  summary: string;
+  whatItDemands?: string;
+  whatItTaught?: string;
+  engineeringParallel: string;
+  body?: RichText;
+  gallery?: Array<{
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    decorative?: boolean;
+    caption?: string;
+    credit?: string;
+    _type: "image";
+    _key: string;
+  }>;
+  order?: number;
+  seo?: Seo;
+};
+
+export type Slug = {
+  _type: "slug";
+  current: string;
+  source?: string;
+};
+
+export type Technology = {
+  _id: string;
+  _type: "technology";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+  slug: Slug;
+  category: "language" | "framework" | "data" | "cloud" | "practice";
+  since?: number;
+  level: "core" | "working";
+  featured?: boolean;
+  icon?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+};
+
+export type SkillReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "skill";
+};
+
+export type Experience = {
+  _id: string;
+  _type: "experience";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  jobTitle: string;
+  company: string;
+  companyImage?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  location?: string;
+  dateStarted: string;
+  isCurrentlyWorkingHere?: boolean;
+  dateEnded?: string;
+  summary?: string;
+  points?: Array<string>;
+  teamSize?: number;
+  techStack?: Array<
+    {
+      _key: string;
+    } & TechnologyReference
+  >;
+  technologies?: Array<
+    {
+      _key: string;
+    } & SkillReference
+  >;
+};
+
+export type Project = {
+  _id: string;
+  _type: "project";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  summary: string;
+  role?: string;
+  year?: number;
+  links?: {
+    live?: string;
+    repo?: string;
+  };
+  images?: Array<{
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    decorative?: boolean;
+    caption?: string;
+    _type: "image";
+    _key: string;
+  }>;
+  techStack?: Array<
+    {
+      _key: string;
+    } & TechnologyReference
+  >;
+  technologies?: Array<
+    {
+      _key: string;
+    } & SkillReference
+  >;
+  linkToBuild?: string;
+};
+
+export type ArticleReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "article";
+};
+
+export type CaseStudy = {
+  _id: string;
+  _type: "caseStudy";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: string;
+  slug: Slug;
+  outcome: string;
+  summary: string;
+  role: string;
+  domain?: string;
+  period?: string;
+  duration?: string;
+  teamSize?: number;
+  confidential?: boolean;
+  featured?: boolean;
+  order?: number;
+  heroImage: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    decorative?: boolean;
+    caption?: string;
+    _type: "image";
+  };
+  techStack?: Array<
+    {
+      _key: string;
+    } & TechnologyReference
+  >;
+  relatedArticles?: Array<
+    {
+      _key: string;
+    } & ArticleReference
+  >;
+  problem: RichText;
+  context?: RichText;
+  constraints?: Array<string>;
+  leadership?: RichText;
+  architecture: RichText;
+  technologyDecisions?: Array<
+    {
+      _key: string;
+    } & DecisionRecord
+  >;
+  tradeOffs?: Array<
+    {
+      _key: string;
+    } & TradeOff
+  >;
+  dataFlow?: RichText;
+  security?: RichText;
+  scalability?: RichText;
+  performance?: RichText;
+  deployment?: RichText;
+  metrics?: Array<
+    {
+      _key: string;
+    } & Metric
+  >;
+  lessons: RichText;
+  seo?: Seo;
+};
+
+export type Profile = {
+  _id: string;
+  _type: "profile";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  headline: string;
+  subheadline?: string;
+  positioning?: string;
+  startYear: number;
+  aboutStory?: RichText;
+  leadership?: Array<{
+    title: string;
+    story?: string;
+    _type: "leadershipStatement";
+    _key: string;
+  }>;
+  martialArtsIntro?: string;
+  portrait: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    decorative?: boolean;
+    caption?: string;
+    credit?: string;
+    _type: "image";
+  };
+  heroImage?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    decorative?: boolean;
+    caption?: string;
+    credit?: string;
+    _type: "image";
+  };
+  featuredCaseStudies?: Array<
+    {
+      _key: string;
+    } & CaseStudyReference
+  >;
+};
+
+export type SanityFileAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+};
+
+export type SiteSettings = {
+  _id: string;
+  _type: "siteSettings";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  name: string;
+  email: string;
+  location?: {
+    city?: string;
+    country?: string;
+    timezone?: string;
+  };
+  availability?: {
+    status?: "available" | "booking" | "unavailable";
+    from?: string;
+    targetRoles?: Array<string>;
+    note?: string;
+  };
+  socials?: Array<{
+    platform: "linkedin" | "github" | "youtube" | "other";
+    title: string;
+    url: string;
+    _type: "socialLink";
+    _key: string;
+  }>;
+  cvFile?: {
+    asset?: SanityFileAssetReference;
+    media?: unknown;
+    _type: "file";
+  };
+  seo?: Seo;
 };
 
 export type SanityImagePaletteSwatch = {
@@ -259,23 +709,37 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type Slug = {
-  _type: "slug";
-  current: string;
-  source?: string;
-};
-
 export type AllSanitySchemaTypes =
-  | Social
+  | CodeSnippet
+  | Callout
+  | Metric
+  | TradeOff
+  | DecisionRecord
   | SanityImageAssetReference
-  | SkillReference
-  | Project
+  | RichText
+  | Seo
+  | Social
+  | Skill
   | SanityImageCrop
   | SanityImageHotspot
-  | Skill
-  | Experience
   | SocialReference
   | PageInfo
+  | CaseStudyReference
+  | Testimonial
+  | Certification
+  | TechnologyReference
+  | Article
+  | MartialArt
+  | Slug
+  | Technology
+  | SkillReference
+  | Experience
+  | Project
+  | ArticleReference
+  | CaseStudy
+  | Profile
+  | SanityFileAssetReference
+  | SiteSettings
   | SanityImagePaletteSwatch
   | SanityImagePalette
   | SanityImageDimensions
@@ -283,8 +747,7 @@ export type AllSanitySchemaTypes =
   | SanityFileAsset
   | SanityAssetSourceData
   | SanityImageAsset
-  | Geopoint
-  | Slug;
+  | Geopoint;
 
 // Source: ../src/lib/sanity/queries.ts
 // Variable: pageInfoQuery
@@ -316,8 +779,8 @@ export type PageInfoQueryResult = {
 // Query: *[_type == "experience"] | order(dateStarted desc){  _id,  jobTitle,  company,  companyImage,  dateStarted,  dateEnded,  isCurrentlyWorkingHere,  points,  "technologies": technologies[]->{ _id, name, image }}
 export type ExperiencesQueryResult = Array<{
   _id: string;
-  jobTitle: string | null;
-  company: string | null;
+  jobTitle: string;
+  company: string;
   companyImage: {
     asset?: SanityImageAssetReference;
     media?: unknown;
@@ -325,7 +788,7 @@ export type ExperiencesQueryResult = Array<{
     crop?: SanityImageCrop;
     _type: "image";
   } | null;
-  dateStarted: string | null;
+  dateStarted: string;
   dateEnded: string | null;
   isCurrentlyWorkingHere: boolean | null;
   points: Array<string> | null;
@@ -351,6 +814,71 @@ export type SocialsQueryResult = Array<{
   url: string | null;
 }>;
 
+// Source: ../src/lib/sanity/queries.ts
+// Variable: siteSettingsQuery
+// Query: *[_type == "siteSettings"][0]{  name,  email,  location,  availability,  socials[]{ _key, platform, title, url }}
+export type SiteSettingsQueryResult = {
+  name: string;
+  email: string;
+  location: {
+    city?: string;
+    country?: string;
+    timezone?: string;
+  } | null;
+  availability: {
+    status?: "available" | "booking" | "unavailable";
+    from?: string;
+    targetRoles?: Array<string>;
+    note?: string;
+  } | null;
+  socials: Array<{
+    _key: string;
+    platform: "github" | "linkedin" | "other" | "youtube";
+    title: string;
+    url: string;
+  }> | null;
+} | null;
+
+// Source: ../src/lib/sanity/queries.ts
+// Variable: profileQuery
+// Query: *[_type == "profile"][0]{  headline,  subheadline,  positioning,  startYear,  aboutStory,  leadership,  martialArtsIntro,  portrait,  heroImage}
+export type ProfileQueryResult = {
+  headline: string;
+  subheadline: string | null;
+  positioning: string | null;
+  startYear: number;
+  aboutStory: RichText | null;
+  leadership: Array<{
+    title: string;
+    story?: string;
+    _type: "leadershipStatement";
+    _key: string;
+  }> | null;
+  martialArtsIntro: string | null;
+  portrait: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    decorative?: boolean;
+    caption?: string;
+    credit?: string;
+    _type: "image";
+  };
+  heroImage: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    decorative?: boolean;
+    caption?: string;
+    credit?: string;
+    _type: "image";
+  } | null;
+} | null;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
@@ -358,5 +886,7 @@ declare module "@sanity/client" {
     '*[_type == "pageInfo"][0]{\n  _id,\n  name,\n  role,\n  email,\n  backgroundInformation,\n  heroImage,\n  profilePic\n}': PageInfoQueryResult;
     '*[_type == "experience"] | order(dateStarted desc){\n  _id,\n  jobTitle,\n  company,\n  companyImage,\n  dateStarted,\n  dateEnded,\n  isCurrentlyWorkingHere,\n  points,\n  "technologies": technologies[]->{ _id, name, image }\n}': ExperiencesQueryResult;
     '*[_type == "social"] | order(title asc){\n  _id,\n  title,\n  url\n}': SocialsQueryResult;
+    '*[_type == "siteSettings"][0]{\n  name,\n  email,\n  location,\n  availability,\n  socials[]{ _key, platform, title, url }\n}': SiteSettingsQueryResult;
+    '*[_type == "profile"][0]{\n  headline,\n  subheadline,\n  positioning,\n  startYear,\n  aboutStory,\n  leadership,\n  martialArtsIntro,\n  portrait,\n  heroImage\n}': ProfileQueryResult;
   }
 }

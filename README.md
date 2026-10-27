@@ -66,6 +66,36 @@ sources, so legacy classes never reach new pages and the reverse.
 Copy `.env.example`. `NEXT_PUBLIC_*` values are public. `SANITY_REVALIDATE_SECRET`
 is server-only and must be set in Vercel and `.env.local`.
 
+## Content model (Sanity)
+
+Singletons `siteSettings` and `profile`; documents `caseStudy`, `project`, `experience`,
+`technology`, `martialArt`, `article`, `certification`, `testimonial`; shared objects `seo`,
+`richText` (with figure, diagram, decision record, callout and code snippet blocks),
+`metric`, `decisionRecord` and `tradeOff`. The legacy `pageInfo`, `skill` and `social` types
+stay, hidden from "create new", until the new site launches. After changing a schema run
+`npm run typegen`.
+
+Images need alt text, or the Decorative flag. Years are stored as numbers (`startYear`,
+`since`) so the site computes durations that never go stale.
+
+## Content migration (one time)
+
+`sanity-project/scripts/migrate-content-model.mjs` creates the new documents from the legacy
+ones. It is additive: it never edits or deletes legacy content, and it does not copy phone
+number or address.
+
+```
+cd sanity-project
+npm run migrate:content                      # dry run against the live dataset: prints the plan
+npm run migrate:content -- --file backup.json    # dry run against a backup file
+SANITY_AUTH_TOKEN=... npm run migrate:content -- --apply      # writes, as one transaction
+SANITY_AUTH_TOKEN=... npm run migrate:content -- --rollback --apply
+```
+
+Take a backup first (`npx sanity dataset export production backups/pre-migration.tar.gz`, after
+`npx sanity login`). `SANITY_AUTH_TOKEN` is an Editor token from the Sanity dashboard (API,
+Tokens); it is only ever read from the environment.
+
 ## Revalidation webhook
 
 In the Sanity dashboard (API, Webhooks) create a webhook:
@@ -77,5 +107,6 @@ In the Sanity dashboard (API, Webhooks) create a webhook:
 
 ## Modernisation status
 
-Phases 0 (security and cleanup), 1 (foundation) and 2 (design system) are done.
+Phases 0 (security and cleanup), 1 (foundation), 2 (design system) and 3 (Sanity model,
+migration script ready, not yet applied) are done.
 Home is still served by `src/pages/index.tsx`; it moves to `src/app` in Phase 4.
