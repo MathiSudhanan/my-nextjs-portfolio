@@ -19,7 +19,9 @@ export function describeAvailability(availability: Availability | undefined): Av
     case "available":
       return {
         status: "available",
-        label: roles.length ? `Open to ${roles.slice(0, 2).join(" and ")} roles` : "Open to roles and consulting",
+        label: roles.length
+          ? `Open to ${roles.slice(0, 2).join(" / ")} roles and consulting`
+          : "Open to roles and consulting",
       };
     case "booking": {
       const from = availability.from

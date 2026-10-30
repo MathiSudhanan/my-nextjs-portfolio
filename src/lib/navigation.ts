@@ -8,8 +8,9 @@ export const routes = {
   experience: { label: "Experience", href: "/experience", live: false },
   about: { label: "About", href: "/about", live: false },
   martialArts: { label: "Martial Arts", href: "/martial-arts", live: false },
+  writing: { label: "Writing", href: "/writing", live: false },
   cv: { label: "CV", href: "/cv", live: false },
-  contact: { label: "Contact", href: "/contact", live: true },
+  contact: { label: "Work with me", href: "/contact", live: true },
 } satisfies Record<string, Route>;
 
 // Articles join the primary navigation once three are published.

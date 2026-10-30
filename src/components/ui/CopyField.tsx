@@ -5,7 +5,16 @@ import { Icon } from "./Icon";
 
 // The value is always visible as selectable text, so copying never depends on the
 // clipboard API (some browsers and in-app views refuse it).
-export function CopyField({ value, label }: { value: string; label: string }) {
+export function CopyField({
+  value,
+  label,
+  compact = false,
+}: {
+  value: string;
+  label: string;
+  /** Smaller text for use inside cards. */
+  compact?: boolean;
+}) {
   const [copied, setCopied] = useState(false);
   const textRef = useRef<HTMLSpanElement>(null);
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
@@ -29,7 +38,10 @@ export function CopyField({ value, label }: { value: string; label: string }) {
 
   return (
     <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-      <span ref={textRef} className="type-h3 break-all text-fg-strong">
+      <span
+        ref={textRef}
+        className={compact ? "break-all text-base font-medium text-fg-strong" : "type-h3 break-all text-fg-strong"}
+      >
         {value}
       </span>
       <button

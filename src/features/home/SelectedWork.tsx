@@ -13,7 +13,8 @@ export function SelectedWork({ studies }: { studies: readonly Study[] }) {
     <Section
       id="work"
       eyebrow="Selected work"
-      heading="Systems I designed, and the decisions behind them"
+      heading="Flagship case studies"
+      description="Systems I designed, and the decisions behind them."
     >
       <div className="grid gap-6 lg:grid-cols-2">
         {studies.map((study, index) => (

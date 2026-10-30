@@ -36,7 +36,7 @@ export function Hero({ headline, subheadline, positioning, availability, photo, 
               {availability.label}
             </StatusPill>
           ) : null}
-          <Eyebrow className="animate-fade" >{site.role}</Eyebrow>
+          <Eyebrow className="animate-fade">{site.brand}</Eyebrow>
           <Heading
             as="h1"
             size="display"
@@ -57,7 +57,7 @@ export function Hero({ headline, subheadline, positioning, availability, photo, 
           ) : null}
           <div className="animate-rise flex flex-wrap items-center gap-x-6 gap-y-3 pt-2" style={delay(240)}>
             <ButtonLink href={contactLink.href} size="lg" arrow="right">
-              Get in touch
+              Work with me
             </ButtonLink>
             {hasWork ? (
               <ButtonLink href="#work" variant="text" arrow="down">

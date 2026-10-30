@@ -6,4 +6,6 @@ export const site = {
   // `www` is the canonical host: the apex domain already redirects to it.
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.mathisudhanan.com",
   role: "Senior Software Architect",
+  // The brand, stated once in the hero eyebrow. Never repeated as a headline.
+  brand: "The Warrior Architect",
 } as const;
