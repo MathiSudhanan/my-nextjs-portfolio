@@ -60,6 +60,52 @@ export default defineType({
       validation: (r) => r.max(6),
     }),
     defineField({
+      name: 'careerPath',
+      title: 'Career path',
+      type: 'array',
+      description:
+        'The stages of your career, oldest first. The Path section on the home page appears once there are at least two.',
+      of: [
+        defineArrayMember({
+          type: 'object',
+          name: 'careerStage',
+          fields: [
+            defineField({
+              name: 'years',
+              title: 'Years',
+              type: 'string',
+              description: 'For example: 2005–2011, or 2019–now',
+              validation: (r) => r.required(),
+            }),
+            defineField({
+              name: 'role',
+              title: 'Role',
+              type: 'string',
+              description: 'For example: Engineer, Tech lead, Architect',
+              validation: (r) => r.required(),
+            }),
+            defineField({
+              name: 'practice',
+              title: 'Martial arts stage (optional)',
+              type: 'string',
+              description:
+                'A short label from your own training, for example Meithari or Kolthari. Use your lineage’s spelling.',
+            }),
+            defineField({
+              name: 'lesson',
+              title: 'Lesson',
+              type: 'text',
+              rows: 3,
+              description: 'One or two sentences about what this stage taught you.',
+              validation: (r) => r.max(220),
+            }),
+          ],
+          preview: {select: {title: 'role', subtitle: 'years'}},
+        }),
+      ],
+      validation: (r) => r.max(5),
+    }),
+    defineField({
       name: 'martialArtsIntro',
       title: 'Martial arts introduction',
       type: 'text',

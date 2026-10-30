@@ -539,6 +539,14 @@ export type Profile = {
     _type: "leadershipStatement";
     _key: string;
   }>;
+  careerPath?: Array<{
+    years: string;
+    role: string;
+    practice?: string;
+    lesson?: string;
+    _type: "careerStage";
+    _key: string;
+  }>;
   martialArtsIntro?: string;
   portrait: {
     asset?: SanityImageAssetReference;
@@ -747,9 +755,94 @@ export type AllSanitySchemaTypes =
   | SanityImageAsset
   | Geopoint;
 
+// Source: ../src/features/architecture/queries.ts
+// Variable: caseStudyIndexQuery
+// Query: *[_type == "caseStudy" && defined(slug.current)] | order(title asc){  _id,  title,  "slug": slug.current,  outcome,  summary,  domain,  role,  period,  teamSize,  heroImage{ asset, hotspot, alt, decorative, "lqip": asset->metadata.lqip },  "techStack": techStack[]->name}
+export type CaseStudyIndexQueryResult = Array<{
+  _id: string;
+  title: string;
+  slug: string;
+  outcome: string;
+  summary: string;
+  domain: string | null;
+  role: string;
+  period: string | null;
+  teamSize: number | null;
+  heroImage: {
+    asset: SanityImageAssetReference | null;
+    hotspot: SanityImageHotspot | null;
+    alt: string | null;
+    decorative: boolean | null;
+    lqip: string | null;
+  };
+  techStack: Array<string> | null;
+}>;
+
+// Source: ../src/features/architecture/queries.ts
+// Variable: caseStudySlugsQuery
+// Query: *[_type == "caseStudy" && defined(slug.current)].slug.current
+export type CaseStudySlugsQueryResult = Array<string>;
+
+// Source: ../src/features/architecture/queries.ts
+// Variable: caseStudyQuery
+// Query: *[_type == "caseStudy" && slug.current == $slug][0]{  _id,  title,  "slug": slug.current,  outcome,  summary,  role,  domain,  period,  duration,  teamSize,  confidential,  heroImage{ asset, hotspot, alt, decorative, caption, "lqip": asset->metadata.lqip },  "techStack": techStack[]->name,  problem,  context,  constraints,  leadership,  architecture,  technologyDecisions,  tradeOffs,  dataFlow,  security,  scalability,  performance,  deployment,  metrics,  lessons,  seo{ metaTitle, metaDescription, noIndex }}
+export type CaseStudyQueryResult = {
+  _id: string;
+  title: string;
+  slug: string;
+  outcome: string;
+  summary: string;
+  role: string;
+  domain: string | null;
+  period: string | null;
+  duration: string | null;
+  teamSize: number | null;
+  confidential: boolean | null;
+  heroImage: {
+    asset: SanityImageAssetReference | null;
+    hotspot: SanityImageHotspot | null;
+    alt: string | null;
+    decorative: boolean | null;
+    caption: string | null;
+    lqip: string | null;
+  };
+  techStack: Array<string> | null;
+  problem: RichText;
+  context: RichText | null;
+  constraints: Array<string> | null;
+  leadership: RichText | null;
+  architecture: RichText;
+  technologyDecisions: Array<
+    {
+      _key: string;
+    } & DecisionRecord
+  > | null;
+  tradeOffs: Array<
+    {
+      _key: string;
+    } & TradeOff
+  > | null;
+  dataFlow: RichText | null;
+  security: RichText | null;
+  scalability: RichText | null;
+  performance: RichText | null;
+  deployment: RichText | null;
+  metrics: Array<
+    {
+      _key: string;
+    } & Metric
+  > | null;
+  lessons: RichText;
+  seo: {
+    metaTitle: string | null;
+    metaDescription: string | null;
+    noIndex: boolean | null;
+  } | null;
+} | null;
+
 // Source: ../src/features/home/queries.ts
 // Variable: homeProfileQuery
-// Query: *[_type == "profile"][0]{  headline,  subheadline,  positioning,  startYear,  heroImage{ asset, hotspot, alt, decorative, "lqip": asset->metadata.lqip },  "featured": featuredCaseStudies[]->{    _id,    title,    "slug": slug.current,    outcome,    summary,    domain,    role,    period,    teamSize,    heroImage{ asset, hotspot, alt, decorative, "lqip": asset->metadata.lqip },    "techStack": techStack[]->name  }}
+// Query: *[_type == "profile"][0]{  headline,  subheadline,  positioning,  startYear,  heroImage{ asset, hotspot, alt, decorative, "lqip": asset->metadata.lqip },  careerPath[]{ _key, years, role, practice, lesson },  "featured": featuredCaseStudies[]->{    _id,    title,    "slug": slug.current,    outcome,    summary,    domain,    role,    period,    teamSize,    heroImage{ asset, hotspot, alt, decorative, "lqip": asset->metadata.lqip },    "techStack": techStack[]->name  }}
 export type HomeProfileQueryResult = {
   headline: string;
   subheadline: string | null;
@@ -762,6 +855,13 @@ export type HomeProfileQueryResult = {
     decorative: boolean | null;
     lqip: string | null;
   } | null;
+  careerPath: Array<{
+    _key: string;
+    years: string;
+    role: string;
+    practice: string | null;
+    lesson: string | null;
+  }> | null;
   featured: Array<{
     _id: string;
     title: string;
@@ -788,6 +888,31 @@ export type HomeProfileQueryResult = {
 // Query: {  "organisations": count(array::unique(*[_type == "experience" && defined(company)].company))}
 export type HomeFactsQueryResult = {
   organisations: number;
+};
+
+// Source: ../src/features/home/queries.ts
+// Variable: homeTestimonialsQuery
+// Query: *[_type == "testimonial" && permission == true][0...2]{  _id,  quote,  name,  role,  company}
+export type HomeTestimonialsQueryResult = Array<{
+  _id: string;
+  quote: string;
+  name: string;
+  role: string | null;
+  company: string | null;
+}>;
+
+// Source: ../src/features/home/queries.ts
+// Variable: homeArticlesQuery
+// Query: {  "total": count(*[_type == "article" && defined(slug.current)]),  "latest": *[_type == "article" && defined(slug.current)] | order(publishedAt desc)[0...3]{    _id,    title,    "slug": slug.current,    kind,    publishedAt  }}
+export type HomeArticlesQueryResult = {
+  total: number;
+  latest: Array<{
+    _id: string;
+    title: string;
+    slug: string;
+    kind: "adr" | "essay";
+    publishedAt: string;
+  }>;
 };
 
 // Source: ../src/lib/sanity/queries.ts
@@ -820,8 +945,13 @@ export type SiteSettingsQueryResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '*[_type == "profile"][0]{\n  headline,\n  subheadline,\n  positioning,\n  startYear,\n  heroImage{ asset, hotspot, alt, decorative, "lqip": asset->metadata.lqip },\n  "featured": featuredCaseStudies[]->{\n    _id,\n    title,\n    "slug": slug.current,\n    outcome,\n    summary,\n    domain,\n    role,\n    period,\n    teamSize,\n    heroImage{ asset, hotspot, alt, decorative, "lqip": asset->metadata.lqip },\n    "techStack": techStack[]->name\n  }\n}': HomeProfileQueryResult;
+    '*[_type == "caseStudy" && defined(slug.current)] | order(title asc){\n  _id,\n  title,\n  "slug": slug.current,\n  outcome,\n  summary,\n  domain,\n  role,\n  period,\n  teamSize,\n  heroImage{ asset, hotspot, alt, decorative, "lqip": asset->metadata.lqip },\n  "techStack": techStack[]->name\n}': CaseStudyIndexQueryResult;
+    '*[_type == "caseStudy" && defined(slug.current)].slug.current': CaseStudySlugsQueryResult;
+    '*[_type == "caseStudy" && slug.current == $slug][0]{\n  _id,\n  title,\n  "slug": slug.current,\n  outcome,\n  summary,\n  role,\n  domain,\n  period,\n  duration,\n  teamSize,\n  confidential,\n  heroImage{ asset, hotspot, alt, decorative, caption, "lqip": asset->metadata.lqip },\n  "techStack": techStack[]->name,\n  problem,\n  context,\n  constraints,\n  leadership,\n  architecture,\n  technologyDecisions,\n  tradeOffs,\n  dataFlow,\n  security,\n  scalability,\n  performance,\n  deployment,\n  metrics,\n  lessons,\n  seo{ metaTitle, metaDescription, noIndex }\n}': CaseStudyQueryResult;
+    '*[_type == "profile"][0]{\n  headline,\n  subheadline,\n  positioning,\n  startYear,\n  heroImage{ asset, hotspot, alt, decorative, "lqip": asset->metadata.lqip },\n  careerPath[]{ _key, years, role, practice, lesson },\n  "featured": featuredCaseStudies[]->{\n    _id,\n    title,\n    "slug": slug.current,\n    outcome,\n    summary,\n    domain,\n    role,\n    period,\n    teamSize,\n    heroImage{ asset, hotspot, alt, decorative, "lqip": asset->metadata.lqip },\n    "techStack": techStack[]->name\n  }\n}': HomeProfileQueryResult;
     '{\n  "organisations": count(array::unique(*[_type == "experience" && defined(company)].company))\n}': HomeFactsQueryResult;
+    '*[_type == "testimonial" && permission == true][0...2]{\n  _id,\n  quote,\n  name,\n  role,\n  company\n}': HomeTestimonialsQueryResult;
+    '{\n  "total": count(*[_type == "article" && defined(slug.current)]),\n  "latest": *[_type == "article" && defined(slug.current)] | order(publishedAt desc)[0...3]{\n    _id,\n    title,\n    "slug": slug.current,\n    kind,\n    publishedAt\n  }\n}': HomeArticlesQueryResult;
     '*[_type == "siteSettings"][0]{\n  name,\n  email,\n  location,\n  availability,\n  socials[]{ _key, platform, title, url },\n  "cvUrl": cvFile.asset->url\n}': SiteSettingsQueryResult;
   }
 }

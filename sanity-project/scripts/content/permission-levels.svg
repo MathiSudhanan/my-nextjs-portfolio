@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 800" width="1280" height="800" font-family="'IBM Plex Sans','Segoe UI',Arial,sans-serif">
+<title>Six permission levels, from most specific to least specific</title>
+<rect width="1280" height="800" fill="#0B1221"/>
+<text x="80" y="90" fill="#00D9FF" font-size="16" letter-spacing="3" font-family="'IBM Plex Mono',Consolas,monospace">PERMISSION LEVELS</text>
+<text x="80" y="124" fill="#94A3B8" font-size="20">Most specific on top. The most specific applicable level wins.</text>
+<rect x="490" y="150" width="420" height="72" rx="12" fill="#111827" stroke="#00D9FF" stroke-width="2"/>
+<text x="518" y="182" fill="#00D9FF" font-size="24" font-weight="600">User</text>
+<text x="518" y="206" fill="#94A3B8" font-size="16">Overrides everything</text>
+<rect x="445" y="238" width="510" height="72" rx="12" fill="#111827" stroke="#3B4658" stroke-width="1.5"/>
+<text x="473" y="270" fill="#E2E8F0" font-size="24" font-weight="600">Category</text>
+<text x="473" y="294" fill="#94A3B8" font-size="16">Country, state, sector</text>
+<rect x="400" y="326" width="600" height="72" rx="12" fill="#111827" stroke="#3B4658" stroke-width="1.5"/>
+<text x="428" y="358" fill="#E2E8F0" font-size="24" font-weight="600">Stat</text>
+<text x="428" y="382" fill="#94A3B8" font-size="16">A specific calculation</text>
+<rect x="355" y="414" width="690" height="72" rx="12" fill="#111827" stroke="#3B4658" stroke-width="1.5"/>
+<text x="383" y="446" fill="#E2E8F0" font-size="24" font-weight="600">Fund</text>
+<text x="383" y="470" fill="#94A3B8" font-size="16">One fund</text>
+<rect x="310" y="502" width="780" height="72" rx="12" fill="#111827" stroke="#3B4658" stroke-width="1.5"/>
+<text x="338" y="534" fill="#E2E8F0" font-size="24" font-weight="600">Hedge Fund</text>
+<text x="338" y="558" fill="#94A3B8" font-size="16">Parent of several funds</text>
+<rect x="265" y="590" width="870" height="72" rx="12" fill="#111827" stroke="#3B4658" stroke-width="1.5"/>
+<text x="293" y="622" fill="#E2E8F0" font-size="24" font-weight="600">Portfolio</text>
+<text x="293" y="646" fill="#94A3B8" font-size="16">A collection of funds</text>
+<defs><marker id="a" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#00D9FF"/></marker></defs>
+<path d="M120 626V192" stroke="#00D9FF" stroke-width="2" fill="none" marker-end="url(#a)"/>
+<text x="140" y="406" fill="#94A3B8" font-size="16">Higher</text>
+<text x="140" y="428" fill="#94A3B8" font-size="16">precedence</text>
+</svg>

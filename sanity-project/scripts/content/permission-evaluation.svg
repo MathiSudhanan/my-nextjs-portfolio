@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 918" width="960" height="918" font-family="'IBM Plex Sans','Segoe UI',Arial,sans-serif">
+<title>Permission evaluation workflow</title>
+<desc>A flowchart. A request is checked in order: user level (grants immediately if present), category, stat, fund and hedge fund (least permissive wins), hedge fund against portfolio (hedge fund takes precedence), then portfolio. A No at category, stat, fund, hedge fund or portfolio denies access. Otherwise access is granted for the allowed scope.</desc>
+<defs>
+<marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#94A3B8"/></marker>
+<marker id="g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#34D399"/></marker>
+<marker id="d" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#F87171"/></marker>
+<marker id="k" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#C8A15B"/></marker>
+</defs>
+<rect width="960" height="918" fill="#0B1221"/>
+<text x="40" y="40" fill="#00D9FF" font-size="12" letter-spacing="2" font-family="'IBM Plex Mono',Consolas,monospace">ACCESS EVALUATION ORDER</text>
+<text x="920" y="40" fill="#94A3B8" font-size="12" text-anchor="end">More specific wins. User level always overrides.</text>
+<rect x="40" y="78" width="480" height="72" rx="10" fill="#111827" stroke="#3B4658" stroke-width="1.5"/>
+<text x="64" y="108" fill="#E2E8F0" font-size="17" font-weight="600">Request</text>
+<text x="64" y="129" fill="#94A3B8" font-size="13">A user asks for data or a report</text>
+<path d="M280 150V180" stroke="#94A3B8" stroke-width="1.5" fill="none" marker-end="url(#a)"/>
+<rect x="40" y="182" width="480" height="72" rx="10" fill="#111827" stroke="#3B4658" stroke-width="1.5"/>
+<circle cx="72" cy="218" r="15" fill="none" stroke="#00D9FF" stroke-width="1.5"/>
+<text x="72" y="223" text-anchor="middle" fill="#00D9FF" font-size="14" font-weight="600">1</text>
+<text x="104" y="212" fill="#E2E8F0" font-size="17" font-weight="600">User-level permission?</text>
+<text x="104" y="233" fill="#94A3B8" font-size="13">The most specific rule. It overrides every other level.</text>
+<path d="M280 254V284" stroke="#94A3B8" stroke-width="1.5" fill="none" marker-end="url(#a)"/>
+<text x="290" y="274" fill="#94A3B8" font-size="12">No</text>
+<path d="M520 218H598" stroke="#34D399" stroke-width="1.5" fill="none" marker-end="url(#g)"/>
+<text x="560" y="210" text-anchor="middle" fill="#34D399" font-size="12">Yes</text>
+<rect x="600" y="182" width="320" height="72" rx="10" fill="#111827" stroke="#34D399" stroke-width="1.5"/>
+<text x="620" y="212" fill="#34D399" font-size="16" font-weight="600">Grant</text>
+<text x="620" y="233" fill="#94A3B8" font-size="13">User level overrides all others</text>
+<rect x="40" y="286" width="480" height="72" rx="10" fill="#111827" stroke="#3B4658" stroke-width="1.5"/>
+<circle cx="72" cy="322" r="15" fill="none" stroke="#00D9FF" stroke-width="1.5"/>
+<text x="72" y="327" text-anchor="middle" fill="#00D9FF" font-size="14" font-weight="600">2</text>
+<text x="104" y="316" fill="#E2E8F0" font-size="17" font-weight="600">Category allowed?</text>
+<text x="104" y="337" fill="#94A3B8" font-size="13">For example country, state or sector.</text>
+<path d="M280 358V388" stroke="#94A3B8" stroke-width="1.5" fill="none" marker-end="url(#a)"/>
+<text x="290" y="378" fill="#94A3B8" font-size="12">Yes</text>
+<path d="M520 322H598" stroke="#F87171" stroke-width="1.5" fill="none" marker-end="url(#d)"/>
+<text x="560" y="314" text-anchor="middle" fill="#F87171" font-size="12">No</text>
+<rect x="600" y="286" width="320" height="72" rx="10" fill="#111827" stroke="#F87171" stroke-width="1.5"/>
+<text x="620" y="316" fill="#F87171" font-size="16" font-weight="600">Deny</text>
+<text x="620" y="337" fill="#94A3B8" font-size="13">Category not permitted</text>
+<rect x="40" y="390" width="480" height="72" rx="10" fill="#111827" stroke="#3B4658" stroke-width="1.5"/>
+<circle cx="72" cy="426" r="15" fill="none" stroke="#00D9FF" stroke-width="1.5"/>
+<text x="72" y="431" text-anchor="middle" fill="#00D9FF" font-size="14" font-weight="600">3</text>
+<text x="104" y="420" fill="#E2E8F0" font-size="17" font-weight="600">Stat allowed?</text>
+<text x="104" y="441" fill="#94A3B8" font-size="13">Is this calculation or formula permitted for the client?</text>
+<path d="M280 462V492" stroke="#94A3B8" stroke-width="1.5" fill="none" marker-end="url(#a)"/>
+<text x="290" y="482" fill="#94A3B8" font-size="12">Yes</text>
+<path d="M520 426H598" stroke="#F87171" stroke-width="1.5" fill="none" marker-end="url(#d)"/>
+<text x="560" y="418" text-anchor="middle" fill="#F87171" font-size="12">No</text>
+<rect x="600" y="390" width="320" height="72" rx="10" fill="#111827" stroke="#F87171" stroke-width="1.5"/>
+<text x="620" y="420" fill="#F87171" font-size="16" font-weight="600">Deny</text>
+<text x="620" y="441" fill="#94A3B8" font-size="13">Stat not permitted</text>
+<rect x="40" y="494" width="480" height="72" rx="10" fill="#111827" stroke="#3B4658" stroke-width="1.5"/>
+<circle cx="72" cy="530" r="15" fill="none" stroke="#00D9FF" stroke-width="1.5"/>
+<text x="72" y="535" text-anchor="middle" fill="#00D9FF" font-size="14" font-weight="600">4</text>
+<text x="104" y="524" fill="#E2E8F0" font-size="17" font-weight="600">Fund and Hedge Fund levels</text>
+<text x="104" y="545" fill="#94A3B8" font-size="13">Take the least permissive of the two. Either No means No.</text>
+<path d="M280 566V596" stroke="#94A3B8" stroke-width="1.5" fill="none" marker-end="url(#a)"/>
+<text x="290" y="586" fill="#94A3B8" font-size="12">Yes</text>
+<path d="M520 530H598" stroke="#F87171" stroke-width="1.5" fill="none" marker-end="url(#d)"/>
+<text x="560" y="522" text-anchor="middle" fill="#F87171" font-size="12">Either No</text>
+<rect x="600" y="494" width="320" height="72" rx="10" fill="#111827" stroke="#F87171" stroke-width="1.5"/>
+<text x="620" y="524" fill="#F87171" font-size="16" font-weight="600">Deny</text>
+<text x="620" y="545" fill="#94A3B8" font-size="13">Fund or Hedge Fund not permitted</text>
+<rect x="40" y="598" width="480" height="72" rx="10" fill="#111827" stroke="#3B4658" stroke-width="1.5"/>
+<circle cx="72" cy="634" r="15" fill="none" stroke="#00D9FF" stroke-width="1.5"/>
+<text x="72" y="639" text-anchor="middle" fill="#00D9FF" font-size="14" font-weight="600">5</text>
+<text x="104" y="628" fill="#E2E8F0" font-size="17" font-weight="600">Hedge Fund vs Portfolio</text>
+<text x="104" y="649" fill="#94A3B8" font-size="13">If both exist, the Hedge Fund level takes precedence.</text>
+<path d="M280 670V700" stroke="#94A3B8" stroke-width="1.5" fill="none" marker-end="url(#a)"/>
+<text x="290" y="690" fill="#94A3B8" font-size="12">Portfolio only</text>
+<path d="M520 634H598" stroke="#C8A15B" stroke-width="1.5" fill="none" marker-end="url(#k)"/>
+<text x="560" y="626" text-anchor="middle" fill="#C8A15B" font-size="12">If set</text>
+<rect x="600" y="598" width="320" height="72" rx="10" fill="#111827" stroke="#C8A15B" stroke-width="1.5"/>
+<text x="620" y="628" fill="#C8A15B" font-size="16" font-weight="600">Allow or deny</text>
+<text x="620" y="649" fill="#94A3B8" font-size="13">Decided by Hedge Fund; Portfolio ignored</text>
+<rect x="40" y="702" width="480" height="72" rx="10" fill="#111827" stroke="#3B4658" stroke-width="1.5"/>
+<circle cx="72" cy="738" r="15" fill="none" stroke="#00D9FF" stroke-width="1.5"/>
+<text x="72" y="743" text-anchor="middle" fill="#00D9FF" font-size="14" font-weight="600">6</text>
+<text x="104" y="732" fill="#E2E8F0" font-size="17" font-weight="600">Portfolio allowed?</text>
+<text x="104" y="753" fill="#94A3B8" font-size="13">Applies when no more specific level overrides it.</text>
+<path d="M280 774V804" stroke="#94A3B8" stroke-width="1.5" fill="none" marker-end="url(#a)"/>
+<text x="290" y="794" fill="#94A3B8" font-size="12">Yes</text>
+<path d="M520 738H598" stroke="#F87171" stroke-width="1.5" fill="none" marker-end="url(#d)"/>
+<text x="560" y="730" text-anchor="middle" fill="#F87171" font-size="12">No</text>
+<rect x="600" y="702" width="320" height="72" rx="10" fill="#111827" stroke="#F87171" stroke-width="1.5"/>
+<text x="620" y="732" fill="#F87171" font-size="16" font-weight="600">Deny</text>
+<text x="620" y="753" fill="#94A3B8" font-size="13">Portfolio not permitted</text>
+<rect x="40" y="806" width="480" height="72" rx="10" fill="#111827" stroke="#34D399" stroke-width="1.5"/>
+<text x="64" y="836" fill="#34D399" font-size="17" font-weight="600">Grant access</text>
+<text x="64" y="857" fill="#94A3B8" font-size="13">Return the data within the allowed scope</text>
+</svg>
