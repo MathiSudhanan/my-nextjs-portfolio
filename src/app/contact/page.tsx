@@ -5,13 +5,16 @@ import { CopyField } from "@/components/ui/CopyField";
 import { Container } from "@/components/ui/Layout";
 import { Eyebrow, Heading } from "@/components/ui/Typography";
 import { describeAvailability } from "@/lib/availability";
+import { pageMetadata } from "@/lib/seo";
 import { sanityFetch } from "@/lib/sanity/fetch";
 import { siteSettingsQuery, siteSettingsTags } from "@/lib/sanity/queries";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Contact",
-  description: "Get in touch about a senior architecture role or a consulting engagement.",
-};
+  description:
+    "Get in touch about a senior architecture role or a consulting engagement.",
+  path: "/contact",
+});
 
 export default async function ContactPage() {
   const settings = await sanityFetch({ query: siteSettingsQuery, tags: siteSettingsTags });

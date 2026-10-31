@@ -7,13 +7,15 @@ import { Eyebrow, Heading } from "@/components/ui/Typography";
 import { ArtCard } from "@/features/martial-arts/ArtCard";
 import { martialArtsQuery, martialArtsTags } from "@/features/martial-arts/queries";
 import { contactLink, routes } from "@/lib/navigation";
+import { pageMetadata } from "@/lib/seo";
 import { sanityFetch } from "@/lib/sanity/fetch";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Martial arts",
   description:
     "Kung Fu, Silambam and Varmakalai: how training alongside the work shapes the way I build systems.",
-};
+  path: "/martial-arts",
+});
 
 export default async function MartialArtsPage() {
   const { intro, arts } = await sanityFetch({ query: martialArtsQuery, tags: martialArtsTags });

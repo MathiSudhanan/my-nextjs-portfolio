@@ -812,9 +812,11 @@ export type CaseStudySlugsQueryResult = Array<string>;
 
 // Source: ../src/features/architecture/queries.ts
 // Variable: caseStudyQuery
-// Query: *[_type == "caseStudy" && slug.current == $slug][0]{  _id,  title,  "slug": slug.current,  outcome,  summary,  role,  domain,  period,  duration,  teamSize,  confidential,  heroImage{ asset, hotspot, alt, decorative, caption, "lqip": asset->metadata.lqip },  "techStack": techStack[]->name,  problem,  context,  constraints,  leadership,  architecture,  technologyDecisions,  tradeOffs,  dataFlow,  security,  scalability,  performance,  deployment,  metrics,  lessons,  seo{ metaTitle, metaDescription, noIndex }}
+// Query: *[_type == "caseStudy" && slug.current == $slug][0]{  _id,  _createdAt,  _updatedAt,  title,  "slug": slug.current,  outcome,  summary,  role,  domain,  period,  duration,  teamSize,  confidential,  heroImage{ asset, hotspot, alt, decorative, caption, "lqip": asset->metadata.lqip },  "techStack": techStack[]->name,  problem,  context,  constraints,  leadership,  architecture,  technologyDecisions,  tradeOffs,  dataFlow,  security,  scalability,  performance,  deployment,  metrics,  lessons,  seo{ metaTitle, metaDescription, noIndex }}
 export type CaseStudyQueryResult = {
   _id: string;
+  _createdAt: string;
+  _updatedAt: string;
   title: string;
   slug: string;
   outcome: string;
@@ -865,6 +867,24 @@ export type CaseStudyQueryResult = {
     metaDescription: string | null;
     noIndex: boolean | null;
   } | null;
+} | null;
+
+// Source: ../src/features/architecture/queries.ts
+// Variable: caseStudySitemapQuery
+// Query: *[_type == "caseStudy" && defined(slug.current) && seo.noIndex != true]{  "slug": slug.current,  _updatedAt}
+export type CaseStudySitemapQueryResult = Array<{
+  slug: string;
+  _updatedAt: string;
+}>;
+
+// Source: ../src/features/architecture/queries.ts
+// Variable: caseStudyOgQuery
+// Query: *[_type == "caseStudy" && slug.current == $slug][0]{  title,  outcome,  role,  domain}
+export type CaseStudyOgQueryResult = {
+  title: string;
+  outcome: string;
+  role: string;
+  domain: string | null;
 } | null;
 
 // Source: ../src/features/experience/queries.ts
@@ -1020,7 +1040,9 @@ declare module "@sanity/client" {
     '*[_type == "profile"][0]{\n  aboutStory,\n  portrait{ asset, hotspot, alt, decorative, caption, "lqip": asset->metadata.lqip },\n  careerPath[]{ _key, years, role, practice, lesson },\n  leadership[]{ _key, title, story }\n}': AboutQueryResult;
     '*[_type == "caseStudy" && defined(slug.current)] | order(title asc){\n  _id,\n  title,\n  "slug": slug.current,\n  outcome,\n  summary,\n  domain,\n  role,\n  period,\n  teamSize,\n  heroImage{ asset, hotspot, alt, decorative, "lqip": asset->metadata.lqip },\n  "techStack": techStack[]->name\n}': CaseStudyIndexQueryResult;
     '*[_type == "caseStudy" && defined(slug.current)].slug.current': CaseStudySlugsQueryResult;
-    '*[_type == "caseStudy" && slug.current == $slug][0]{\n  _id,\n  title,\n  "slug": slug.current,\n  outcome,\n  summary,\n  role,\n  domain,\n  period,\n  duration,\n  teamSize,\n  confidential,\n  heroImage{ asset, hotspot, alt, decorative, caption, "lqip": asset->metadata.lqip },\n  "techStack": techStack[]->name,\n  problem,\n  context,\n  constraints,\n  leadership,\n  architecture,\n  technologyDecisions,\n  tradeOffs,\n  dataFlow,\n  security,\n  scalability,\n  performance,\n  deployment,\n  metrics,\n  lessons,\n  seo{ metaTitle, metaDescription, noIndex }\n}': CaseStudyQueryResult;
+    '*[_type == "caseStudy" && slug.current == $slug][0]{\n  _id,\n  _createdAt,\n  _updatedAt,\n  title,\n  "slug": slug.current,\n  outcome,\n  summary,\n  role,\n  domain,\n  period,\n  duration,\n  teamSize,\n  confidential,\n  heroImage{ asset, hotspot, alt, decorative, caption, "lqip": asset->metadata.lqip },\n  "techStack": techStack[]->name,\n  problem,\n  context,\n  constraints,\n  leadership,\n  architecture,\n  technologyDecisions,\n  tradeOffs,\n  dataFlow,\n  security,\n  scalability,\n  performance,\n  deployment,\n  metrics,\n  lessons,\n  seo{ metaTitle, metaDescription, noIndex }\n}': CaseStudyQueryResult;
+    '*[_type == "caseStudy" && defined(slug.current) && seo.noIndex != true]{\n  "slug": slug.current,\n  _updatedAt\n}': CaseStudySitemapQueryResult;
+    '*[_type == "caseStudy" && slug.current == $slug][0]{\n  title,\n  outcome,\n  role,\n  domain\n}': CaseStudyOgQueryResult;
     '*[_type == "experience"] | order(coalesce(dateEnded, "9999-12-31") desc, dateStarted desc){\n  _id,\n  jobTitle,\n  company,\n  location,\n  dateStarted,\n  dateEnded,\n  isCurrentlyWorkingHere,\n  summary,\n  points,\n  teamSize,\n  "techStack": techStack[]->name\n}': ExperienceQueryResult;
     '*[_type == "profile"][0]{\n  headline,\n  subheadline,\n  positioning,\n  startYear,\n  heroImage{ asset, hotspot, alt, decorative, "lqip": asset->metadata.lqip },\n  careerPath[]{ _key, years, role, practice, lesson },\n  "featured": featuredCaseStudies[]->{\n    _id,\n    title,\n    "slug": slug.current,\n    outcome,\n    summary,\n    domain,\n    role,\n    period,\n    teamSize,\n    heroImage{ asset, hotspot, alt, decorative, "lqip": asset->metadata.lqip },\n    "techStack": techStack[]->name\n  }\n}': HomeProfileQueryResult;
     '{\n  "organisations": count(array::unique(*[_type == "experience" && defined(company)].company))\n}': HomeFactsQueryResult;

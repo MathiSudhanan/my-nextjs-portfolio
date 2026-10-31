@@ -9,13 +9,15 @@ import { RichText } from "@/features/architecture/RichText";
 import { CareerPath } from "@/features/home/CareerPath";
 import { contactLink, routes } from "@/lib/navigation";
 import { resolveImage } from "@/lib/sanity/image";
+import { pageMetadata } from "@/lib/seo";
 import { sanityFetch } from "@/lib/sanity/fetch";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "About",
   description:
     "A full-stack architect with 20+ years of practice: how I work, how I lead and what shaped both.",
-};
+  path: "/about",
+});
 
 export default async function AboutPage() {
   const profile = await sanityFetch({ query: aboutQuery, tags: aboutTags });

@@ -22,6 +22,8 @@ export const caseStudySlugsQuery = defineQuery(
 // Rich text sections are projected whole: their block and image fields are the content.
 export const caseStudyQuery = defineQuery(`*[_type == "caseStudy" && slug.current == $slug][0]{
   _id,
+  _createdAt,
+  _updatedAt,
   title,
   "slug": slug.current,
   outcome,
@@ -52,3 +54,17 @@ export const caseStudyQuery = defineQuery(`*[_type == "caseStudy" && slug.curren
 }`);
 
 export const caseStudyTags = [tagForType("caseStudy"), tagForType("technology")] as const;
+
+// Case studies that belong in the sitemap: published, with a slug, and not marked noindex.
+export const caseStudySitemapQuery = defineQuery(`*[_type == "caseStudy" && defined(slug.current) && seo.noIndex != true]{
+  "slug": slug.current,
+  _updatedAt
+}`);
+
+// Just what the generated social image needs.
+export const caseStudyOgQuery = defineQuery(`*[_type == "caseStudy" && slug.current == $slug][0]{
+  title,
+  outcome,
+  role,
+  domain
+}`);

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import type { ReactNode } from "react";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { Tag } from "@/components/ui/Badges";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Layout";
@@ -9,6 +10,9 @@ import { Eyebrow, Heading } from "@/components/ui/Typography";
 import { DecisionRecordCard } from "@/features/architecture/DecisionRecordCard";
 import { RichText } from "@/features/architecture/RichText";
 import { getCaseStudy, getCaseStudySlugs } from "@/features/architecture/data";
+import { routes } from "@/lib/navigation";
+import { absoluteUrl, pageMetadata } from "@/lib/seo";
+import { site } from "@/lib/site";
 import { resolveImage } from "@/lib/sanity/image";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -23,9 +27,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const study = await getCaseStudy(slug);
   if (!study) return {};
   return {
-    title: study.seo?.metaTitle ?? study.title,
-    description: study.seo?.metaDescription ?? study.summary,
-    robots: study.seo?.noIndex ? { index: false, follow: false } : undefined,
+    ...pageMetadata({
+      title: study.seo?.metaTitle ?? study.title,
+      description: study.seo?.metaDescription ?? study.summary,
+      path: `${routes.architecture.href}/${slug}`,
+      type: "article",
+    }),
+    ...(study.seo?.noIndex ? { robots: { index: false, follow: false } } : {}),
   };
 }
 
@@ -143,7 +151,18 @@ export default async function CaseStudyPage({ params }: Props) {
 
   return (
     <Container className="py-section">
-
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "Article",
+          headline: study.title,
+          description: study.summary,
+          url: absoluteUrl(`${routes.architecture.href}/${slug}`),
+          datePublished: study._createdAt,
+          dateModified: study._updatedAt,
+          author: { "@type": "Person", name: site.name, url: absoluteUrl("/") },
+        }}
+      />
       <header className="flex max-w-4xl flex-col gap-5">
         {eyebrow ? <Eyebrow>{eyebrow}</Eyebrow> : null}
         <Heading as="h1">{study.title}</Heading>

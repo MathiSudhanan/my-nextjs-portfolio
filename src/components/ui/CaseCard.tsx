@@ -20,6 +20,8 @@ export type CaseCardProps = {
   href: string | null;
   /** "wide" puts the figure beside the text from the lg breakpoint up. */
   layout?: "stacked" | "wide";
+  /** The heading level of the title: h2 directly under a page h1, h3 under a section h2. */
+  headingLevel?: "h2" | "h3";
 };
 
 /**
@@ -38,6 +40,7 @@ export function CaseCard({
   image,
   href,
   layout = "stacked",
+  headingLevel: Heading = "h3",
 }: CaseCardProps) {
   const eyebrow = [domain, period].filter(Boolean).join(" · ");
   const facts = [role, teamSize ? `Team of ${teamSize}` : null].filter(Boolean).join(" · ");
@@ -79,7 +82,7 @@ export function CaseCard({
 
       <div className="flex flex-1 flex-col gap-4 p-6 md:p-8">
         {eyebrow ? <p className="type-label text-muted">{eyebrow}</p> : null}
-        <h3 className="type-h3 text-fg-strong">
+        <Heading className="type-h3 text-fg-strong">
           {href ? (
             <Link
               href={href}
@@ -90,7 +93,7 @@ export function CaseCard({
           ) : (
             title
           )}
-        </h3>
+        </Heading>
         <p className="font-medium text-fg-strong">{outcome}</p>
         <p className="text-muted">{summary}</p>
         {facts ? <p className="type-label text-muted">{facts}</p> : null}

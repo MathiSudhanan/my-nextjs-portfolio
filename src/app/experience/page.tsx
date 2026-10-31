@@ -6,13 +6,15 @@ import { Eyebrow, Heading } from "@/components/ui/Typography";
 import { experienceQuery, experienceTags } from "@/features/experience/queries";
 import { Timeline } from "@/features/experience/Timeline";
 import { contactLink } from "@/lib/navigation";
+import { pageMetadata } from "@/lib/seo";
 import { sanityFetch } from "@/lib/sanity/fetch";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Experience",
   description:
     "Roles from software engineer to senior application architect: what I owned, what I shipped and the technologies I used.",
-};
+  path: "/experience",
+});
 
 export default async function ExperiencePage() {
   const roles = await sanityFetch({ query: experienceQuery, tags: experienceTags });

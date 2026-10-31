@@ -4,13 +4,15 @@ import { CaseCard } from "@/components/ui/CaseCard";
 import { Container } from "@/components/ui/Layout";
 import { Eyebrow, Heading } from "@/components/ui/Typography";
 import { getCaseStudies } from "@/features/architecture/data";
+import { pageMetadata } from "@/lib/seo";
 import { resolveImage } from "@/lib/sanity/image";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: "Architecture",
   description:
     "Case studies in system design: the problem, the constraints, the decisions and what they cost.",
-};
+  path: "/architecture",
+});
 
 export default async function ArchitecturePage() {
   const studies = await getCaseStudies();
@@ -43,6 +45,7 @@ export default async function ArchitecturePage() {
                 techStack={study.techStack}
                 image={resolveImage(study.heroImage)}
                 href={`/architecture/${study.slug}`}
+                headingLevel="h2"
               />
             </div>
           </li>
