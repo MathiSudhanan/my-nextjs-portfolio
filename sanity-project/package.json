@@ -9,7 +9,10 @@
     "start": "sanity start",
     "build": "sanity build",
     "deploy": "sanity deploy",
-    "deploy-graphql": "sanity graphql deploy"
+    "deploy-graphql": "sanity graphql deploy",
+    "typegen": "sanity schema extract --enforce-required-fields && sanity typegen generate",
+    "migrate:content": "node scripts/migrate-content-model.mjs",
+    "migrate:content:apply": "sanity exec scripts/migrate-content-model.mjs --with-user-token -- --apply"
   },
   "keywords": [
     "sanity"
