@@ -959,6 +959,34 @@ export type HomeArticlesQueryResult = {
   }>;
 };
 
+// Source: ../src/features/martial-arts/queries.ts
+// Variable: martialArtsQuery
+// Query: {  "intro": *[_type == "profile"][0].martialArtsIntro,  "arts": *[_type == "martialArt" && defined(slug.current)] | order(order asc, startYear asc){    _id,    name,    nativeName,    startYear,    school,    summary,    whatItDemands,    whatItTaught,    engineeringParallel,    gallery[]{ _key, asset, hotspot, alt, decorative, caption, credit, "lqip": asset->metadata.lqip }  }}
+export type MartialArtsQueryResult = {
+  intro: string | null;
+  arts: Array<{
+    _id: string;
+    name: string;
+    nativeName: string | null;
+    startYear: number | null;
+    school: string | null;
+    summary: string;
+    whatItDemands: string | null;
+    whatItTaught: string | null;
+    engineeringParallel: string;
+    gallery: Array<{
+      _key: string;
+      asset: SanityImageAssetReference | null;
+      hotspot: SanityImageHotspot | null;
+      alt: string | null;
+      decorative: boolean | null;
+      caption: string | null;
+      credit: string | null;
+      lqip: string | null;
+    }> | null;
+  }>;
+};
+
 // Source: ../src/lib/sanity/queries.ts
 // Variable: siteSettingsQuery
 // Query: *[_type == "siteSettings"][0]{  name,  email,  location,  availability,  socials[]{ _key, platform, title, url },  "cvUrl": cvFile.asset->url}
@@ -998,6 +1026,7 @@ declare module "@sanity/client" {
     '{\n  "organisations": count(array::unique(*[_type == "experience" && defined(company)].company))\n}': HomeFactsQueryResult;
     '*[_type == "testimonial" && permission == true][0...2]{\n  _id,\n  quote,\n  name,\n  role,\n  company\n}': HomeTestimonialsQueryResult;
     '{\n  "total": count(*[_type == "article" && defined(slug.current)]),\n  "latest": *[_type == "article" && defined(slug.current)] | order(publishedAt desc)[0...3]{\n    _id,\n    title,\n    "slug": slug.current,\n    kind,\n    publishedAt\n  }\n}': HomeArticlesQueryResult;
+    '{\n  "intro": *[_type == "profile"][0].martialArtsIntro,\n  "arts": *[_type == "martialArt" && defined(slug.current)] | order(order asc, startYear asc){\n    _id,\n    name,\n    nativeName,\n    startYear,\n    school,\n    summary,\n    whatItDemands,\n    whatItTaught,\n    engineeringParallel,\n    gallery[]{ _key, asset, hotspot, alt, decorative, caption, credit, "lqip": asset->metadata.lqip }\n  }\n}': MartialArtsQueryResult;
     '*[_type == "siteSettings"][0]{\n  name,\n  email,\n  location,\n  availability,\n  socials[]{ _key, platform, title, url },\n  "cvUrl": cvFile.asset->url\n}': SiteSettingsQueryResult;
   }
 }
