@@ -755,6 +755,33 @@ export type AllSanitySchemaTypes =
   | SanityImageAsset
   | Geopoint;
 
+// Source: ../src/features/about/queries.ts
+// Variable: aboutQuery
+// Query: *[_type == "profile"][0]{  aboutStory,  portrait{ asset, hotspot, alt, decorative, caption, "lqip": asset->metadata.lqip },  careerPath[]{ _key, years, role, practice, lesson },  leadership[]{ _key, title, story }}
+export type AboutQueryResult = {
+  aboutStory: RichText | null;
+  portrait: {
+    asset: SanityImageAssetReference | null;
+    hotspot: SanityImageHotspot | null;
+    alt: string | null;
+    decorative: boolean | null;
+    caption: string | null;
+    lqip: string | null;
+  };
+  careerPath: Array<{
+    _key: string;
+    years: string;
+    role: string;
+    practice: string | null;
+    lesson: string | null;
+  }> | null;
+  leadership: Array<{
+    _key: string;
+    title: string;
+    story: string | null;
+  }> | null;
+} | null;
+
 // Source: ../src/features/architecture/queries.ts
 // Variable: caseStudyIndexQuery
 // Query: *[_type == "caseStudy" && defined(slug.current)] | order(title asc){  _id,  title,  "slug": slug.current,  outcome,  summary,  domain,  role,  period,  teamSize,  heroImage{ asset, hotspot, alt, decorative, "lqip": asset->metadata.lqip },  "techStack": techStack[]->name}
@@ -839,6 +866,23 @@ export type CaseStudyQueryResult = {
     noIndex: boolean | null;
   } | null;
 } | null;
+
+// Source: ../src/features/experience/queries.ts
+// Variable: experienceQuery
+// Query: *[_type == "experience"] | order(coalesce(dateEnded, "9999-12-31") desc, dateStarted desc){  _id,  jobTitle,  company,  location,  dateStarted,  dateEnded,  isCurrentlyWorkingHere,  summary,  points,  teamSize,  "techStack": techStack[]->name}
+export type ExperienceQueryResult = Array<{
+  _id: string;
+  jobTitle: string;
+  company: string;
+  location: string | null;
+  dateStarted: string;
+  dateEnded: string | null;
+  isCurrentlyWorkingHere: boolean | null;
+  summary: string | null;
+  points: Array<string> | null;
+  teamSize: number | null;
+  techStack: Array<string> | null;
+}>;
 
 // Source: ../src/features/home/queries.ts
 // Variable: homeProfileQuery
@@ -945,9 +989,11 @@ export type SiteSettingsQueryResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
+    '*[_type == "profile"][0]{\n  aboutStory,\n  portrait{ asset, hotspot, alt, decorative, caption, "lqip": asset->metadata.lqip },\n  careerPath[]{ _key, years, role, practice, lesson },\n  leadership[]{ _key, title, story }\n}': AboutQueryResult;
     '*[_type == "caseStudy" && defined(slug.current)] | order(title asc){\n  _id,\n  title,\n  "slug": slug.current,\n  outcome,\n  summary,\n  domain,\n  role,\n  period,\n  teamSize,\n  heroImage{ asset, hotspot, alt, decorative, "lqip": asset->metadata.lqip },\n  "techStack": techStack[]->name\n}': CaseStudyIndexQueryResult;
     '*[_type == "caseStudy" && defined(slug.current)].slug.current': CaseStudySlugsQueryResult;
     '*[_type == "caseStudy" && slug.current == $slug][0]{\n  _id,\n  title,\n  "slug": slug.current,\n  outcome,\n  summary,\n  role,\n  domain,\n  period,\n  duration,\n  teamSize,\n  confidential,\n  heroImage{ asset, hotspot, alt, decorative, caption, "lqip": asset->metadata.lqip },\n  "techStack": techStack[]->name,\n  problem,\n  context,\n  constraints,\n  leadership,\n  architecture,\n  technologyDecisions,\n  tradeOffs,\n  dataFlow,\n  security,\n  scalability,\n  performance,\n  deployment,\n  metrics,\n  lessons,\n  seo{ metaTitle, metaDescription, noIndex }\n}': CaseStudyQueryResult;
+    '*[_type == "experience"] | order(coalesce(dateEnded, "9999-12-31") desc, dateStarted desc){\n  _id,\n  jobTitle,\n  company,\n  location,\n  dateStarted,\n  dateEnded,\n  isCurrentlyWorkingHere,\n  summary,\n  points,\n  teamSize,\n  "techStack": techStack[]->name\n}': ExperienceQueryResult;
     '*[_type == "profile"][0]{\n  headline,\n  subheadline,\n  positioning,\n  startYear,\n  heroImage{ asset, hotspot, alt, decorative, "lqip": asset->metadata.lqip },\n  careerPath[]{ _key, years, role, practice, lesson },\n  "featured": featuredCaseStudies[]->{\n    _id,\n    title,\n    "slug": slug.current,\n    outcome,\n    summary,\n    domain,\n    role,\n    period,\n    teamSize,\n    heroImage{ asset, hotspot, alt, decorative, "lqip": asset->metadata.lqip },\n    "techStack": techStack[]->name\n  }\n}': HomeProfileQueryResult;
     '{\n  "organisations": count(array::unique(*[_type == "experience" && defined(company)].company))\n}': HomeFactsQueryResult;
     '*[_type == "testimonial" && permission == true][0...2]{\n  _id,\n  quote,\n  name,\n  role,\n  company\n}': HomeTestimonialsQueryResult;

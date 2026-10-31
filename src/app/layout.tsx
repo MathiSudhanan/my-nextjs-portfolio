@@ -29,15 +29,17 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
     href: social.url,
   }));
 
+  const cv = settings?.cvUrl ? { label: "CV", href: settings.cvUrl } : null;
+
   return (
     <html lang="en" className={fontVariables}>
       <body>
         <SkipLink />
-        <Header />
+        <Header cv={cv} />
         <main id="main" tabIndex={-1} className="outline-none">
           {children}
         </main>
-        <Footer email={settings?.email ?? null} socials={socials} />
+        <Footer email={settings?.email ?? null} cv={cv} socials={socials} />
       </body>
     </html>
   );

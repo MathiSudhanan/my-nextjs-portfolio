@@ -1,11 +1,12 @@
 import { ButtonLink } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Layout";
-import { contactLink, cvRoute, primaryNav } from "@/lib/navigation";
+import { contactLink, primaryNav, type NavItem } from "@/lib/navigation";
 import { Brand } from "./Brand";
 import { MobileMenu } from "./MobileMenu";
 import { NavLinks } from "./NavLinks";
 
-export function Header() {
+/** `cv` is the uploaded CV file, when there is one. It opens the PDF directly. */
+export function Header({ cv }: { cv: NavItem | null }) {
   // Until other routes exist the header is just the brand and the Contact button,
   // visible at every width. The menu appears once there is something to put in it.
   const hasMenu = primaryNav.length > 0;
@@ -23,14 +24,14 @@ export function Header() {
 
         <div className="flex items-center gap-2">
           <div className={hasMenu ? "hidden items-center gap-2 md:flex" : "flex items-center gap-2"}>
-            {cvRoute ? (
-              <ButtonLink href={cvRoute.href} variant="text" className="px-3 no-underline">
-                {cvRoute.label}
+            {cv ? (
+              <ButtonLink href={cv.href} variant="text" className="px-3 no-underline">
+                {cv.label}
               </ButtonLink>
             ) : null}
             <ButtonLink href={contactLink.href}>{contactLink.label}</ButtonLink>
           </div>
-          {hasMenu ? <MobileMenu items={primaryNav} cv={cvRoute} contact={contactLink} /> : null}
+          {hasMenu ? <MobileMenu items={primaryNav} cv={cv} contact={contactLink} /> : null}
         </div>
       </Container>
     </header>

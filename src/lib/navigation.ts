@@ -5,11 +5,10 @@ type Route = NavItem & { live: boolean };
 // live routes, so a half-built site never shows a dead link.
 export const routes = {
   architecture: { label: "Architecture", href: "/architecture", live: true },
-  experience: { label: "Experience", href: "/experience", live: false },
-  about: { label: "About", href: "/about", live: false },
+  experience: { label: "Experience", href: "/experience", live: true },
+  about: { label: "About", href: "/about", live: true },
   martialArts: { label: "Martial Arts", href: "/martial-arts", live: false },
   writing: { label: "Writing", href: "/writing", live: false },
-  cv: { label: "CV", href: "/cv", live: false },
   contact: { label: "Work with me", href: "/contact", live: true },
 } satisfies Record<string, Route>;
 
@@ -21,5 +20,4 @@ export const primaryNav: readonly NavItem[] = [
   routes.martialArts,
 ].filter((route) => route.live);
 
-export const cvRoute: NavItem | null = routes.cv.live ? routes.cv : null;
 export const contactLink: NavItem = routes.contact;

@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Container } from "@/components/ui/Layout";
 import { Icon } from "@/components/ui/Icon";
 import { Eyebrow } from "@/components/ui/Typography";
-import { contactLink, cvRoute, primaryNav } from "@/lib/navigation";
+import { contactLink, primaryNav, type NavItem } from "@/lib/navigation";
 import { site } from "@/lib/site";
 import { Brand } from "./Brand";
 
@@ -13,11 +13,13 @@ const linkClass =
 
 type Props = {
   email: string | null;
+  /** The uploaded CV file, when there is one. */
+  cv: NavItem | null;
   socials: readonly FooterLink[];
 };
 
-export function Footer({ email, socials }: Props) {
-  const explore = cvRoute ? [...primaryNav, cvRoute] : primaryNav;
+export function Footer({ email, cv, socials }: Props) {
+  const explore = primaryNav;
 
   return (
     <footer className="mt-section border-t border-line">
@@ -61,6 +63,15 @@ export function Footer({ email, socials }: Props) {
                 Send a message
               </Link>
             </li>
+            {cv ? (
+              <li>
+                <a href={cv.href} target="_blank" rel="noopener noreferrer" className={linkClass}>
+                  {cv.label}
+                  <Icon name="arrow-up-right" className="ml-1" />
+                  <span className="sr-only"> (PDF, opens in a new tab)</span>
+                </a>
+              </li>
+            ) : null}
             {socials.map((social) => (
               <li key={social.id}>
                 <a href={social.href} target="_blank" rel="noopener noreferrer" className={linkClass}>
