@@ -4,7 +4,7 @@ type Route = NavItem & { live: boolean };
 // Flip `live` to true when a route ships. The header, footer and cards only link to
 // live routes, so a half-built site never shows a dead link.
 export const routes = {
-  architecture: { label: "Architecture", href: "/architecture", live: false },
+  architecture: { label: "Architecture", href: "/architecture", live: true },
   experience: { label: "Experience", href: "/experience", live: false },
   about: { label: "About", href: "/about", live: false },
   martialArts: { label: "Martial Arts", href: "/martial-arts", live: false },

@@ -21,7 +21,7 @@ const API_VERSION = '2025-10-01'
 const API = `https://${PROJECT_ID}.api.sanity.io/v${API_VERSION}`
 const DRAFT_ID = 'drafts.caseStudy-permission-platform'
 const PUBLISHED_ID = 'caseStudy-permission-platform'
-const TECHNOLOGIES = ['.NET Core', 'Web API', 'SQL Server', 'React', 'TypeScript']
+export const TECHNOLOGIES = ['.NET Core', 'Web API', 'SQL Server', 'React', 'TypeScript']
 
 const here = (name) => fileURLToPath(new URL(`./content/${name}`, import.meta.url))
 
@@ -43,7 +43,7 @@ const numbered = (text) => block(text, 'normal', {listItem: 'number', level: 1})
 const ref = (id) => ({_type: 'reference', _ref: id})
 const imageRef = (assetId) => ({_type: 'reference', _ref: assetId})
 
-function buildDocument({heroAssetId, diagramAssetId, technologyIds}) {
+export function buildDocument({heroAssetId, diagramAssetId, technologyIds}) {
   keyCounter = 0
   return {
     _id: DRAFT_ID,

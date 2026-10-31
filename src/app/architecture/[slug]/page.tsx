@@ -9,7 +9,6 @@ import { Eyebrow, Heading } from "@/components/ui/Typography";
 import { DecisionRecordCard } from "@/features/architecture/DecisionRecordCard";
 import { RichText } from "@/features/architecture/RichText";
 import { getCaseStudy, getCaseStudySlugs } from "@/features/architecture/data";
-import { SAMPLE_SLUG } from "@/features/architecture/sample";
 import { resolveImage } from "@/lib/sanity/image";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -144,15 +143,6 @@ export default async function CaseStudyPage({ params }: Props) {
 
   return (
     <Container className="py-section">
-      {slug === SAMPLE_SLUG ? (
-        <p
-          role="note"
-          className="mb-10 rounded-card border border-gold/60 p-4 text-small text-fg"
-        >
-          <span className="type-label mr-2 text-gold">Sample</span>
-          This is a fictional case study used to review the template. It is hidden in production.
-        </p>
-      ) : null}
 
       <header className="flex max-w-4xl flex-col gap-5">
         {eyebrow ? <Eyebrow>{eyebrow}</Eyebrow> : null}

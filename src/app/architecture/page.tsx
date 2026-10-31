@@ -4,7 +4,6 @@ import { CaseCard } from "@/components/ui/CaseCard";
 import { Container } from "@/components/ui/Layout";
 import { Eyebrow, Heading } from "@/components/ui/Typography";
 import { getCaseStudies } from "@/features/architecture/data";
-import { SAMPLE_SLUG } from "@/features/architecture/sample";
 import { resolveImage } from "@/lib/sanity/image";
 
 export const metadata: Metadata = {
@@ -45,9 +44,6 @@ export default async function ArchitecturePage() {
                 image={resolveImage(study.heroImage)}
                 href={`/architecture/${study.slug}`}
               />
-              {study.slug === SAMPLE_SLUG ? (
-                <p className="type-label mt-2 text-muted">Sample content, hidden in production</p>
-              ) : null}
             </div>
           </li>
         ))}
