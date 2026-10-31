@@ -21,6 +21,11 @@ const API_VERSION = '2025-10-01'
 const API = `https://${PROJECT_ID}.api.sanity.io/v${API_VERSION}`
 const DRAFT_ID = 'drafts.caseStudy-permission-platform'
 const PUBLISHED_ID = 'caseStudy-permission-platform'
+export const DIAGRAM_ALT =
+  'Flowchart of the permission evaluation order. A user-level permission, if set, is used and overrides every other level. Then a user group permission overrides the levels below it. Category and stat must each be allowed. Client Fund and Fund take the least permissive answer, Fund takes precedence over Portfolio, and a Portfolio permission returns all its data, with the Base Profile as the default.'
+export const DIAGRAM_DESCRIPTION =
+  'A request is checked from the most specific level down. 1: if a user-level permission is set, it is used and overrides every other level. 2: if a user group permission is set, it is used and overrides every level below it. 3: if the category is not permitted, access is denied. 4: if the stat is not permitted, access is denied. 5: the Client Fund and Fund levels are compared and the least permissive wins, so a No at either denies access. 6: if a Fund level exists it takes precedence over Portfolio, and the Portfolio level is ignored. 7: if a Portfolio permission is set and nothing further overrides it, all the portfolio’s data is returned. 8: otherwise the Base Profile default permissions apply. The data within the allowed scope is then returned.'
+
 export const TECHNOLOGIES = ['.NET Core', 'Web API', 'SQL Server', 'React', 'TypeScript']
 
 const here = (name) => fileURLToPath(new URL(`./content/${name}`, import.meta.url))
@@ -62,9 +67,9 @@ export function buildDocument({heroAssetId, diagramAssetId, technologyIds}) {
     heroImage: {
       _type: 'image',
       asset: imageRef(heroAssetId),
-      alt: 'Six permission levels stacked from most specific to least specific: User, Category, Stat, Fund, Hedge Fund and Portfolio, with an arrow showing that higher means more precedence.',
+      alt: 'Eight permission levels stacked from most specific to least specific: User, User Group, Category, Stat, Client Fund, Fund, Portfolio and Base Profile, with an arrow showing that higher means more precedence.',
       decorative: false,
-      caption: 'The six permission levels, most specific first.',
+      caption: 'The eight permission levels, most specific first.',
     },
     techStack: technologyIds.map((id) => ({_type: 'reference', _key: key('t'), _ref: id})),
 
@@ -76,10 +81,10 @@ export function buildDocument({heroAssetId, diagramAssetId, technologyIds}) {
     ],
     context: [
       p(
-        'The client is a hedge fund risk platform, described generically here. Five applications were involved, including a calculation engine and an operations application. A client’s access is granted at several levels: Portfolio (a collection of funds), Hedge Fund (the parent of several funds), Fund, Stat (a specific calculation) and Category (for example country or sector).',
+        'The client is a financial risk platform, described generically here. Five applications were involved, including a calculation engine and an operations application. A client’s access is granted at eight levels: Base Profile (the default permissions), Portfolio (a collection of funds), Fund, Client Fund, Stat (a specific calculation), Category (for example country or sector), User Group and User.',
       ),
       p(
-        'Permissions applied at company, user-group and user level. Stat and Category permissions followed a waterfall across Base Profile, Company User Group, Hedge Fund, Client Fund User Group and Client Fund User. Report-date permissions for daily and monthly dates applied to both funds and portfolios. The data ran to millions of records.',
+        'Permissions applied at several levels at once, from a default Base Profile up to individual users. Stat and Category permissions followed a waterfall across those levels. Report-date permissions for daily and monthly dates applied to both funds and portfolios. The data ran to millions of records.',
       ),
     ],
     constraints: [
@@ -103,29 +108,28 @@ export function buildDocument({heroAssetId, diagramAssetId, technologyIds}) {
         _type: 'diagram',
         _key: key('d'),
         asset: imageRef(diagramAssetId),
-        alt: 'Flowchart of the permission evaluation order. Checks run from user level, then category, stat, fund and hedge fund, hedge fund against portfolio, and finally portfolio. A No at category, stat, fund or hedge fund, or portfolio denies access.',
-        description:
-          'A request is checked in order. 1: if a user-level permission exists, access is granted and every other level is ignored. 2: if the category is not permitted, access is denied. 3: if the stat is not permitted, access is denied. 4: the fund and hedge fund levels are compared and the least permissive wins, so a No at either denies access. 5: if a hedge fund level exists it takes precedence over portfolio, and the portfolio level is ignored. 6: otherwise the portfolio level decides. If nothing denies the request, the data within the allowed scope is returned.',
+        alt: DIAGRAM_ALT,
+        description: DIAGRAM_DESCRIPTION,
         caption: 'How a permission request is evaluated, most specific level first.',
       },
       h3('How a request is evaluated'),
       p(
         'The levels are checked from most to least specific, and the most specific applicable permission wins. User level always stays in control.',
       ),
-      numbered('User level: if present, it overrides every other level.'),
+      numbered('User level: if set, it overrides every other level.'),
+      numbered('User Group level: if set, it overrides every level below it.'),
       numbered(
         'Category: if a category (for example US) is not permitted, the report does not show it, even when the client requests it.',
       ),
-      numbered('Stat: the client must have permission for that particular calculation.'),
+      numbered('Stat: the client must have permission for that particular calculation or formula.'),
       numbered(
-        'Fund and Hedge Fund: take the least permissive of the two. If either says No, the answer is No.',
+        'Client Fund and Fund: take the least permissive of the two. If either says No, the answer is No.',
       ),
+      numbered('Fund and Portfolio: if both are present, the Fund level takes precedence.'),
       numbered(
-        'Hedge Fund and Portfolio: if both are present, the Hedge Fund level takes precedence and Portfolio is ignored.',
+        'Portfolio: if a Portfolio permission is set and no further level overrides it, the user gets all of the portfolio’s data.',
       ),
-      numbered(
-        'Portfolio: if no more specific level overrides it, the Portfolio permission applies to all its data.',
-      ),
+      numbered('Base Profile: the initial level, where the default permissions are given.'),
     ],
     technologyDecisions: [
       {
